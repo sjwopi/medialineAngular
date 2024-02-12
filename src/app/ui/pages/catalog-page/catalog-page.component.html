@@ -1,0 +1,9 @@
+<div class="section">
+  <button (click)="changeSort($event)">all</button>
+  
+  <button *ngFor="let text of allTypesProduct" (click)="changeSort($event)">{{text}}</button>
+
+  <br>
+
+  <app-product-card *ngFor="let product of productService.products | filterProduct:sortByType" [product]="product"></app-product-card>
+</div>

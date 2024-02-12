@@ -1,0 +1,30 @@
+<div>
+  <button *ngIf="isLogin" (click)="openCreate()" style="padding: 16px 20px; border-radius: 10px; border: 2px solid black;">+</button>
+
+  <div *ngIf="isLogin" id="createNews" class="div">
+    <form [formGroup]="newsCreateForm" (submit)="submitCreate()">
+  
+      <input formControlName="newsname">
+      <div *ngIf="newsCreateForm.get('newsname')?.invalid">newsname is required.</div>
+  
+      <input formControlName="newstime">
+      <div *ngIf="newsCreateForm.get('newstime')?.invalid">newstime is required.</div>
+  
+      <input formControlName="newstext">
+      <div *ngIf="newsCreateForm.get('newstext')?.invalid">newstext is required.</div>
+  
+      <input formControlName="newsimage" />
+      <div *ngIf="newsCreateForm.get('newstext')?.invalid">newsimage is required.</div>
+  
+      <button style="background-color: green; padding: 20px; margin-left: 200px;" type="submit">create</button>
+    </form>
+  
+    <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="closeCreate()">otmena</button>
+  </div>
+
+
+
+  <app-news-item *ngFor="let news of newsService.news" [news]="news"></app-news-item>
+</div>
+
+

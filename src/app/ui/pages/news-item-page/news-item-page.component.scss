@@ -1,0 +1,22 @@
+.div {
+  display: none;
+
+  input {
+    width: 80%;
+    height: 100px;
+    background-color: white;
+    border: 2px black solid;
+    margin: 20px 10%;
+  }
+  &.open {
+    display: block;
+  }
+}
+
+div {
+  color: red;
+}
+
+* {
+  color: black;
+}

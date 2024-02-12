@@ -1,0 +1,21 @@
+<div style="display: block; background-color: rgb(255, 119, 119); margin: 20px 150px;">
+  <h1>{{product.name}}</h1>
+  <h2>{{product.type}}</h2>
+  <p>{{product.text}}</p>
+  <img src="{{product.image}}">
+
+  <ul *ngIf="product.peculiarities">
+    <h1>Особенности</h1>
+    <li *ngFor="let peculiarity of product.peculiarities">
+      {{peculiarity}}
+    </li>
+  </ul>
+
+  <ul *ngIf="product.equipment">
+    <h1>Комплектация</h1>
+    <li *ngFor="let equipment of product.equipment">
+      {{equipment}}
+    </li>
+  </ul>
+  
+</div>

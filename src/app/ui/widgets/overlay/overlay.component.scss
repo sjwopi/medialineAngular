@@ -1,0 +1,165 @@
+/* Overlay */
+
+.overlay {
+  position: relative;
+  margin-bottom: 64px;
+
+  &__img {
+    width: 100%;
+  }
+
+  &__rectange {
+    position: absolute;
+    z-index: 2;
+    top: 73px;
+    right: 0;
+    padding: 45px 60px;
+    max-width: 570px;
+    background-color: var(--blue-clear);
+    border-radius: 5px 0 0 5px;
+
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: 400;
+    color: var(--white-text);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  &__search {
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    gap: 120px;
+
+    width: 1190px;
+    height: 66px;
+    margin: -33px auto 0 auto;
+  }
+
+  &__input {
+    border: 0.5px var(--gray-text) solid;
+    border-radius: 30px;
+    color: var(--gray-text);
+    font-size: 18px;
+    background-color: var(--light-blue);
+
+    width: 970px;
+    height: 100%;
+    padding: 22px 30px;
+  }
+
+  &__search-btn {
+    width: 100px;
+    height: 100%;
+    border-radius: 30px;
+    background-color: var(--blue);
+    padding-top: 4px;
+  }
+
+  &__search-img {
+    width: 30px;
+    height: 30px;
+    transition: all .3s ease-in-out;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .overlay {
+    &__search {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__input {
+      width: 60%;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .overlay {
+    &__rectange {
+      width: 390px;
+      padding: 25px 30px;
+      font-size: 25px;
+      line-height: 30px;
+      font-weight: 400;
+    }
+
+    &__search {
+      height: 52px;
+    }
+
+    &__search-btn {
+      width: 80px;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .overlay {
+    height: fit-content;
+
+    &__search {
+      position: absolute;
+      left: 0;
+      bottom: -30px;
+      transition: all .4s ease-in-out;
+      transform: translateX(100vw);
+      gap: 0;
+      margin: 0;
+    }
+
+    &__search.active {
+      transform: translateX(0px);
+    }
+
+    &__input {
+      width: 100%;
+      border-radius: 20px 0 0 20px;
+      height: 45px;
+    }
+
+    &__search-btn {
+      border-radius: 0 20px 20px 0;
+      height: 45px;
+    }
+
+    &__search-img {
+      width: 25px;
+      height: 25px;
+    }
+
+    &__rectange {
+      top: calc(100% - 40px);
+      left: 0;
+      padding: 10px 0;
+      height: 40px;
+      max-width: 100%;
+      width: 100%;
+      font-size: 16px;
+      line-height: 21px;
+      font-weight: 400;
+      border-radius: 0;
+      transition: all .4s ease-in-out;
+      overflow: hidden;
+      opacity: 1;
+
+      .active {
+        opacity: 0;
+      }
+
+      p {
+        white-space: nowrap;
+        animation: breakingNews 10s linear infinite;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .overlay {
+    margin-bottom: 30px;
+  }
+}

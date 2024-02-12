@@ -1,0 +1,38 @@
+<section class="contacts" id="contacts">
+  <h2 class="title">Наши контакты</h2>
+  <div class="contacts__container">
+    
+    <form class="contacts__form" [formGroup]="questionsForm" (ngSubmit)="submitFormQuestions()">
+      <h3 class="contacts__title">Остались вопросы?<br>Cпросите специалиста!</h3>
+
+      <input formControlName="clientname" placeholder="Ваше имя" class="contacts__input">
+      <input formControlName="phone" placeholder="Ваш телефон" type="phone" class="contacts__input">
+
+      <a class="contacts__subtext">
+        Заполняя настоящую форму вы даете свое согласие на 
+        <u>обработку своих персональныхданных.</u>
+      </a>
+      <button type="submit" class="contacts__btn">отправить</button>
+
+    </form>
+
+
+
+
+
+    <div class="contacts__text-list">
+      <ul class="contacts__list">
+        <li class="contacts__item"><span><b>Главный офис:</b></span><br>603024, Нижний Новгород, улица Невзоровых, дом
+          87, офис 10</li>
+        <li class="contacts__item"><b>Телефон:</b> (831) 429-03-58</li>
+        <li class="contacts__item"><b>Факс:</b> (831) 421-52-57</li>
+        <li class="contacts__item"><b>Email:</b> kravchenko.andrey@mdlgroup.ru</li>
+      </ul>
+      <ul class="contacts__list">
+        <li class="contacts__item"><span><b>Филиал: </b></span><br>125008, Москва, проезд Черепановых, дом 32</li>
+        <li class="contacts__item"><b>Телефон:</b> (499) 153-16-50, 154-97-35</li>
+        <li class="contacts__item"><b>Факс:</b> (499) 154-97-35</li>
+      </ul>
+    </div>
+  </div>
+</section>

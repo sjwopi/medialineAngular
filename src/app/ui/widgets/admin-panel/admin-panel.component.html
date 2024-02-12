@@ -1,0 +1,41 @@
+<!-- <button *ngIf="isLogin" (click)="openDelete()"
+  style="background-color: white; padding: 30px; margin: 20px;">delete</button>
+<button *ngIf="isLogin" (click)="openEdit()" style="background-color: white; padding: 30px; margin: 20px;">edit</button>
+
+
+
+  
+  
+  <div *ngIf="isLogin" id="editNews" class="div">
+  <form [formGroup]="newsEditForm" (submit)="submitEdit()">
+
+    <input formControlName="newsname">
+    <div *ngIf="newsEditForm.get('newsname')?.invalid">newsname is required.</div>
+
+    <input formControlName="newstime">
+    <div *ngIf="newsEditForm.get('newstime')?.invalid">newstime is required.</div>
+
+    <input formControlName="newstext">
+    <div *ngIf="newsEditForm.get('newstext')?.invalid">newstext is required.</div>
+
+    <input formControlName="newsimage" />
+    <div *ngIf="newsEditForm.get('newstext')?.invalid">newsimage is required.</div>
+
+    <button style="background-color: green; padding: 20px; margin-left: 200px;" type="submit">edit</button>
+  </form>
+
+  <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="closeEdit()">otmena</button>
+</div>
+
+<div *ngIf="isLogin" id="deleteNews" class="div">
+ 
+  <h1>вы уверены?</h1>
+
+  <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="submitDelete()">да</button>
+
+
+  <button style="background-color: green; padding: 20px; margin-left: 200px;" (click)="closeDelete()">отмена</button>
+</div>
+
+work epta
+<p *ngFor="let control of this.controls">{{control}}</p> -->

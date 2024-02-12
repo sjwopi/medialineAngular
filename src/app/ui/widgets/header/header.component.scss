@@ -1,0 +1,138 @@
+.header {
+  width: 1520px;
+  margin: 32px auto;
+  height: 45px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  &__logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 175px;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+
+  &__link {
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 23px;
+    color: var(--dark-text);
+  }
+}
+
+.header-mob {
+  display: none;
+  height: 105px;
+  padding: 30px 0;
+  width: 500px;
+  margin: 0 auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+
+  &__logo {
+    height: 45px;
+  }
+
+  &__link {
+    text-decoration: none;
+    margin: 0;
+    font-size: 20px;
+    line-height: 23px;
+    color: var(--dark-text);
+  }
+
+  &__btn {
+    height: 35px;
+    width: 35px;
+    background: url(/assets/img/hamb.svg) center/contain no-repeat;
+  }
+
+  &__container {
+    display: flex;
+    position: fixed;
+    z-index: 999;
+    top: 104px;
+    left: -100vw;
+    background-color: var(--light-blue);
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    width: 100vw;
+    height: calc(100vh - 105px);
+    transition: all .3s ease-in-out;
+    gap: 18px;
+  }
+
+  &.active {
+    position: fixed;
+    background-color: var(--light-blue);
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100vw;
+    padding: 0 calc((100vw - 500px) / 2)
+  }
+
+  &.active .overlay__search-img {
+    opacity: 0;
+  }
+
+  &.active .header-mob__container {
+    display: flex;
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .header {
+    width: 1100px;
+
+    &__nav {
+      width: 100%;
+      justify-content: end;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .header {
+    width: 900px;
+
+    &__nav {
+      gap: 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .header {
+    display: none;
+  }
+
+  .header-mob {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header-mob {
+    width: 100%;
+    padding: 0 20px;
+
+    &.active {
+      width: 100%;
+      padding: 0 20px;
+    }
+  }
+}

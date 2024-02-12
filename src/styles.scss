@@ -1,1 +1,131 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("./assets/fonts/Arimo.scss");
+
+@keyframes breakingNews {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  background: initial;
+}
+
+
+:root {
+  margin: 0;
+  padding: 0;
+  font-family: "Arimo", sans-serif;
+  font-weight: 400;
+  color: var(--dark-text);
+  background: var(--light-blue);
+
+  --blue: #2A5199;
+  --blue-clear: rgba(42, 81, 153, 0.8);
+  --light-blue: #F4F8FF;
+  --light-gray: #FEFEFE;
+
+
+  --gray-text: #656565;
+  --white-text: #ffffff;
+  --light-gray-text: #EAEEF5;
+  --dark-text: #000A1D;
+}
+
+body.open {
+  max-height: 100vw;
+  overflow: hidden;
+}
+
+.modal-over {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all .2s ease-in-out;
+}
+
+body.open .modal-over {
+  display: flex;
+}
+
+.content {
+  width: 1520px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 400;
+  padding: 30px 0 50px 0;
+}
+
+.text {
+  position: relative;
+  font-size: 18px;
+  line-height: 30px;
+}
+
+
+@media screen and (max-width: 1600px) {
+  .title {
+    padding: 15px 0 25px 0px;
+  }
+
+  .content {
+    width: 1100px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .content {
+    width: 900px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content {
+    width: 500px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 28px;
+    line-height: 32px;
+    padding: 0 20px;
+    margin: 20px 0 30px 0;
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
