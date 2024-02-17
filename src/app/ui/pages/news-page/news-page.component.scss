@@ -12,3 +12,29 @@
     display: block;
   }
 }
+
+.news-list {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 50px;
+}
+
+
+@media screen and (max-width: 1600px) {
+  .news-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 1000px) {
+  .news-list {
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 600px) {
+  .news-list {
+    padding: 0 20px;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

@@ -8,9 +8,9 @@ import { IProduct } from 'src/app/models/product.model';
 })
 export class ProductCardComponent {
   @Input() product: IProduct = {
-    name: "",
-    text: "",
-    image: "",
-    type: ""
+    title: "",
+    description: "",
+    imagePath: "",
+    category: ""
   }
 }

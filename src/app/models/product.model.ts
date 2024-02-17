@@ -1,9 +1,9 @@
 export interface IProduct {
   id?: number
-  name: string
-  text: string
-  image: string
-  type: string
+  title: string
+  description: string
+  imagePath: string
+  category: string
   peculiarities?: string[]
   equipment?: string[]
 }

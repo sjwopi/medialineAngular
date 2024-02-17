@@ -9,6 +9,6 @@ export class FilterProductPipe implements PipeTransform {
     if (type.toLowerCase() === "all") {
       return products
     }
-    return products.filter(p => p.type.toLowerCase() === type.toLowerCase())
+    return products.filter(p => p.category.toLowerCase() === type.toLowerCase())
   }
 }

@@ -1,44 +1,19 @@
-
-<!-- <app-admin-panel [controls]="this.controls" [typeItem]=></app-admin-panel> -->
-
-
-<div style="background-color: rgb(255, 119, 119); margin: 50px;">
-  <p>{{news.name}}</p>
-  <p>{{news.time}}</p>
-  <p>{{news.text}}</p>
-  <img src="{{news.image}}">
-</div>
-
+<section class="newspage content">
+  <app-admin-panel
+    [controls]="this.adminPanelControls"
+    title="Редактирование новости"
+    typePanel="{{adminPanelType}}"
+    typeItem="{{adminPanelItemType}}"
+    [item]="this.news"
+    class="content"
+  ></app-admin-panel>
 
 
-
-<div *ngIf="isLogin" id="editNews" class="div">
-  <form [formGroup]="newsEditForm" (submit)="submitEdit()">
-
-    <input formControlName="newsname">
-    <div *ngIf="newsEditForm.get('newsname')?.invalid">newsname is required.</div>
-
-    <input formControlName="newstime">
-    <div *ngIf="newsEditForm.get('newstime')?.invalid">newstime is required.</div>
-
-    <input formControlName="newstext">
-    <div *ngIf="newsEditForm.get('newstext')?.invalid">newstext is required.</div>
-
-    <input formControlName="newsimage" />
-    <div *ngIf="newsEditForm.get('newstext')?.invalid">newsimage is required.</div>
-
-    <button style="background-color: green; padding: 20px; margin-left: 200px;" type="submit">edit</button>
-  </form>
-
-  <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="closeEdit()">otmena</button>
-</div>
-
-<div *ngIf="isLogin" id="deleteNews" class="div">
- 
-  <h1>вы уверены?</h1>
-
-  <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="submitDelete()">да</button>
-
-
-  <button style="background-color: green; padding: 20px; margin-left: 200px;" (click)="closeDelete()">отмена</button>
-</div>
+  <h2 class="newspage__title title">{{news.title}}</h2>
+  <div class="newspage__container">
+    <img class="newspage__img"  src="{{news.imagePath}}" alt="фото с мероприятия">
+    <h3 class="newspage__subtitle title">{{news.time}}</h3>
+    <p class="newspage__text text" *ngFor="let par of news.text.split('ENTER')">{{par}}</p>
+    <!-- <p class="newspage__text text">{{news.text}}</p> -->
+  </div>
+</section>

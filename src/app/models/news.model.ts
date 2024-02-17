@@ -1,7 +1,7 @@
 export interface INewsItem {
   id?: number
-  name: string
+  title: string
   text: string
   time: string
-  image: string
+  imagePath: string | ArrayBuffer | null
 }

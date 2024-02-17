@@ -9,8 +9,8 @@ import { INewsItem } from 'src/app/models/news.model';
 export class NewsItemComponent {
   @Input() news: INewsItem = {
     time: "",
-    name: "",
+    title: "",
     text: "",
-    image: ""
+    imagePath: ""
   }
 }

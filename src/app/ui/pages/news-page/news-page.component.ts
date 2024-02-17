@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IControls, IPanelItemTypes, IPanelTypes } from 'src/app/models/adminPanel.model';
 import { INewsItem } from 'src/app/models/news.model';
 import { NewsService } from 'src/app/services/news.service';
 
@@ -14,14 +15,14 @@ export class NewsPageComponent implements OnInit {
   ) {}
 
   news: INewsItem[] = this.newsService.news
-  newsCreateForm!: FormGroup;
   newsItem: INewsItem = {
     time: "",
-    name: "",
+    title: "",
     text: "",
-    image: ""
+    imagePath: ""
   }
   isLogin: boolean = true;
+  newsCreateForm!: FormGroup;
 
 
   openCreate() {
@@ -32,23 +33,50 @@ export class NewsPageComponent implements OnInit {
   }
   submitCreate() {
     if (!this.newsCreateForm.invalid) {
-      this.newsItem.name = this.newsCreateForm.controls["newsname"].value
-      this.newsItem.time = this.newsCreateForm.controls["newstime"].value
+      this.newsItem.title = this.newsCreateForm.controls["newsname"].value
+      this.newsItem.time = "2018-09-04"
       this.newsItem.text = this.newsCreateForm.controls["newstext"].value
-      this.newsItem.image = this.newsCreateForm.controls["newsimage"].value
+      this.newsItem.imagePath = '/assets/img/news-img.png';
       this.newsService.createNews(this.newsItem).subscribe()
       this.closeCreate();
     }
   }
 
+
+
+  adminPanelControls: IControls[] = [
+    {
+      control: "newsTitle",
+      placeholder: "Заголовок новости",
+      type: "text"
+    },
+    {
+      control: "newsTime",
+      placeholder: "Дата",
+      type: "text"
+    },
+    {
+      control: "newsText",
+      placeholder: "Содержание",
+      type: "textarea"
+    },
+    {
+      control: "newsImage",
+      placeholder: "",
+      type: "text"
+    }]
+  adminPanelType: IPanelTypes = IPanelTypes.ItemCreate;
+  adminPanelItemType: IPanelItemTypes = IPanelItemTypes.INewsItem
+
+
   ngOnInit(): void {
-    this.newsService.getAll().pipe().subscribe()
+    this.newsService.getAll().pipe().subscribe();
 
     this.newsCreateForm = new FormGroup({
       newsname: new FormControl("", [Validators.required]),
       newstime: new FormControl("", [Validators.required]),
       newstext: new FormControl("", [Validators.required]),
-      newsimage: new FormControl("", [Validators.required]),
+      newsimage: new FormControl("", []),
     });
   }
 }

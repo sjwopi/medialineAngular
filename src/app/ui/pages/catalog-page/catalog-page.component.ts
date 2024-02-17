@@ -26,8 +26,8 @@ export class CatalogPageComponent {
       /* console.log(Date.now()) */
 
       items.forEach(item => {
-        if (!(this.allTypesProduct.includes(item.type))) {
-          this.allTypesProduct.push(item.type)
+        if (!(this.allTypesProduct.includes(item.category))) {
+          this.allTypesProduct.push(item.category)
         }
       })
       

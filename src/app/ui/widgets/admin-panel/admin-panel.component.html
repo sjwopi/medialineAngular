@@ -1,41 +1,34 @@
-<!-- <button *ngIf="isLogin" (click)="openDelete()"
-  style="background-color: white; padding: 30px; margin: 20px;">delete</button>
-<button *ngIf="isLogin" (click)="openEdit()" style="background-color: white; padding: 30px; margin: 20px;">edit</button>
+<section *ngIf="isLogin">
+  <div *ngIf="isOpen" class="adminPanel">
+    <h1 class="adminPanel__title">{{title}}</h1>
 
+    <form class="adminPanel__form" [formGroup]="adminForm">
+      <div *ngFor="let control of controls">
 
+        <input *ngIf="control.type == 'text'" formControlName="{{control.control}}"
+          placeholder="{{control.placeholder}}" class="adminPanel__input" type="text" />
 
-  
-  
-  <div *ngIf="isLogin" id="editNews" class="div">
-  <form [formGroup]="newsEditForm" (submit)="submitEdit()">
+        <input *ngIf="control.type == 'file'" formControlName="{{control.control}}"
+          placeholder="{{control.placeholder}}" class="adminPanel__input" type="file" />
 
-    <input formControlName="newsname">
-    <div *ngIf="newsEditForm.get('newsname')?.invalid">newsname is required.</div>
+        <textarea *ngIf="control.type == 'textarea'" formControlName="{{control.control}}"
+          placeholder="{{control.placeholder}}" class="adminPanel__input adminPanel__input_textarea"></textarea>
 
-    <input formControlName="newstime">
-    <div *ngIf="newsEditForm.get('newstime')?.invalid">newstime is required.</div>
+      </div>
 
-    <input formControlName="newstext">
-    <div *ngIf="newsEditForm.get('newstext')?.invalid">newstext is required.</div>
+      <div class="adminPanel__btns">
+        <button (click)="changeVisibility()" class="adminPanel__btn adminPanel__btn_back">Отмена</button>
 
-    <input formControlName="newsimage" />
-    <div *ngIf="newsEditForm.get('newstext')?.invalid">newsimage is required.</div>
+        <button class="adminPanel__btn" type="submit" (click)="submit()" *ngIf="this.typePanel === '0'">Создать</button>
 
-    <button style="background-color: green; padding: 20px; margin-left: 200px;" type="submit">edit</button>
-  </form>
+        <button class="adminPanel__btn" type="submit" (click)="submit()"
+          *ngIf="this.typePanel === '1'">Редактировать</button>
+        <button class="adminPanel__btn adminPanel__btn_delete" *ngIf="this.typePanel === '1'">Удалить</button>
+      </div>
+    </form>
+  </div>
 
-  <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="closeEdit()">otmena</button>
-</div>
-
-<div *ngIf="isLogin" id="deleteNews" class="div">
- 
-  <h1>вы уверены?</h1>
-
-  <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="submitDelete()">да</button>
-
-
-  <button style="background-color: green; padding: 20px; margin-left: 200px;" (click)="closeDelete()">отмена</button>
-</div>
-
-work epta
-<p *ngFor="let control of this.controls">{{control}}</p> -->
+  <div *ngIf="!isOpen" class="adminPanel__open-btns">
+    <button class="adminPanel__btn" (click)="changeVisibility()">Открыть админ панель</button>
+  </div>
+</section>

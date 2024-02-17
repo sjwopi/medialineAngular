@@ -13,11 +13,11 @@ import { LoginPageComponent } from './ui/pages/login-page/login-page.component';
 import { NewsPageComponent } from './ui/pages/news-page/news-page.component';
 import { NewsItemPageComponent } from './ui/pages/news-item-page/news-item-page.component';
 
-import { OverlayComponent } from './ui/widgets/overlay/overlay.component';
-import { AboutComponent } from './ui/widgets/about/about.component';
-import { AdvantagesComponent } from './ui/widgets/advantages/advantages.component';
-import { ConditionsComponent } from './ui/widgets/conditions/conditions.component';
-import { ManufacturersComponent } from './ui/widgets/manufacturers/manufacturers.component';
+import { OverlayComponent } from './ui/blocks/overlay/overlay.component';
+import { AboutComponent } from './ui/blocks/about/about.component';
+import { AdvantagesComponent } from './ui/blocks/advantages/advantages.component';
+import { ConditionsComponent } from './ui/blocks/conditions/conditions.component';
+import { ManufacturersComponent } from './ui/blocks/manufacturers/manufacturers.component';
 import { ContactsComponent } from './ui/widgets/contacts/contacts.component';
 
 import { FilterNewsPipe } from './pipes/filter-news.pipe';

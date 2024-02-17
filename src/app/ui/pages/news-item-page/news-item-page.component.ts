@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IControls, IPanelItemTypes, IPanelTypes } from 'src/app/models/adminPanel.model';
 import { INewsItem } from 'src/app/models/news.model';
 import { NewsService } from 'src/app/services/news.service';
 
@@ -15,63 +16,59 @@ export class NewsItemPageComponent {
     private activateRoute: ActivatedRoute,
     public newsService: NewsService
   ) { }
-
   newsEditForm!: FormGroup;
   id = this.activateRoute.snapshot.params["id"];
   news: INewsItem = {
     time: "",
-    name: "",
+    title: "",
     text: "",
-    image: ""
+    imagePath: ""
   }
-  isLogin: boolean = true;
-  controls: string[] = ["asdf", "asfd"]
+  adminPanelControls: IControls[] = [
+    {
+      control: "title",
+      placeholder: "Заголовок новости",
+      type: "text"
+    },
+    {
+      control: "time",
+      placeholder: "Дата",
+      type: "text"
+    },
+    {
+      control: "text",
+      placeholder: "Содержание",
+      type: "textarea"
+    },
+    {
+      control: "imagePath",
+      placeholder: "",
+      type: "text"
+    }]
 
-  openDelete() {
-    document.getElementById('deleteNews')!.classList.add('open')
-  };
-  closeDelete() {
-    document.getElementById('deleteNews')!.classList.remove('open')
-  };
-  submitDelete() {
-    this.newsService.deleteNews(this.news.id!).subscribe()
-    this.closeDelete()
-  }
+  adminPanelType: IPanelTypes = IPanelTypes.ItemEdit;
 
-  openEdit() {
-    document.getElementById('editNews')!.classList.add('open')
-  }
-  closeEdit() {
-    document.getElementById('editNews')!.classList.remove('open')
-  }
-  submitEdit() {
-    if (!this.newsEditForm.invalid) {
-      this.news.name = this.newsEditForm.controls["newsname"].value
-      this.news.time = this.newsEditForm.controls["newstime"].value
-      this.news.text = this.newsEditForm.controls["newstext"].value
-      this.news.image = this.newsEditForm.controls["newsimage"].value
-      this.newsService.editNews(this.news).subscribe()
-      this.closeEdit();
-    }
-  }
+  adminPanelItemType: IPanelItemTypes = IPanelItemTypes.INewsItem
+
 
   ngOnInit(): void {
-    this.newsEditForm = new FormGroup({
-      newsname: new FormControl("", [Validators.required]),
-      newstime: new FormControl("", [Validators.required]),
-      newstext: new FormControl("", [Validators.required]),
-      newsimage: new FormControl("", [Validators.required]),
-    });
+    /*   this.newsEditForm = new FormGroup({
+        newsname: new FormControl("", [Validators.required]),
+        newstime: new FormControl("", [Validators.required]),
+        newstext: new FormControl("", [Validators.required]),
+        newsimage: new FormControl("", [Validators.required]),
+      }); */
 
     this.newsService.getById(this.id).pipe().subscribe(item => {
       this.news = item
 
-      if (this.isLogin) {
-        this.newsEditForm.controls["newsname"].setValue(item.name)
+
+      /* if (this.isLogin) {
+        this.newsEditForm.controls["newsname"].setValue(item.title)
         this.newsEditForm.controls["newstime"].setValue(item.time)
         this.newsEditForm.controls["newstext"].setValue(item.text)
-        this.newsEditForm.controls["newsimage"].setValue(item.image)
-      }
+        this.newsEditForm.controls["newsimage"].setValue(item.imagePath)
+      } */
     })
 
 

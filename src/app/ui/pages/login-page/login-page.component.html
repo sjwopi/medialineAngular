@@ -1,5 +1,27 @@
-<p>login-page works!</p>
+<div class="login">
+  <h2 class="login__title">Вход</h2>
+  <form class="login__form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
 
-<input placeholder="login">
-<input placeholder="password">
-<input placeholder="email">
+    <input id="email" formControlName="email" placeholder="email" class="login__input" required minlength="4"
+      maxlength="40">
+    <div class="login__error"
+      [ngClass]="{'has-error': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
+      <!-- <span *ngIf="loginForm.get('email')?.['errors']?.['required']">Поле email не может быть пустым</span> -->
+    </div>
+
+
+    <input formControlName="password" placeholder="Password" type="password" class="login__input" required
+      maxlength="20">
+    <div class="login__error"
+      [ngClass]="{'has-error': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+      <!-- <span *ngIf="loginForm.get('password')?.['errors']?.['required']">Поле password не может быть пустым</span>
+      <span *ngIf="loginForm.get('password')?.['errors']?.['minlength']">Поле password должно иметь минимум 8 символов</span> -->
+    </div>
+
+    <div class="login__btns">
+      <a routerLink="/" class="login__btn login__btn_back">Отмена</a>
+      <button type="submit" class="login__btn" click="submitLogin()">Войти</button>
+    </div>
+
+  </form>
+</div>

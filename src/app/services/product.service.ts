@@ -8,25 +8,26 @@ import { Observable, delay, retry, tap } from 'rxjs';
 })
 export class ProductService {
   constructor(private http: HttpClient) { }
-
+  baseUrl: string =  'http://localhost:8080/api';
+  /* baseUrl: string =  'http://localhost:3000/'; */
   products: IProduct[] = [
     {
-      name: "",
-      text: "",
-      image: "",
-      type: "",
+      title: "",
+      description: "",
+      imagePath: "",
+      category: "",
     }
   ]
 
   getAll(): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>('http://localhost:3000/products').pipe(
+    return this.http.get<IProduct[]>(`${this.baseUrl}/products/all`).pipe(
       delay(304),
       retry(2),
       tap(products => this.products = products)
     )
   }
   getById(id: number): Observable<IProduct> {
-    return this.http.get<IProduct>(`http://localhost:3000/products/${id}`).pipe(
+    return this.http.get<IProduct>(`${this.baseUrl}/products/${id}`).pipe(
       delay(304),
       retry(2)
     )

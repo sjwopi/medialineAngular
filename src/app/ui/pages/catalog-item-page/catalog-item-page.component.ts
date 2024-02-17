@@ -11,10 +11,10 @@ import { ProductService } from 'src/app/services/product.service';
 export class CatalogItemPageComponent {
   id: number;
   product: IProduct = {
-    name: "",
-    text: "",
-    image: "",
-    type: ""
+    title: "",
+    description: "",
+    imagePath: "",
+    category: ""
   }
 
   constructor(private activateRoute: ActivatedRoute, public productsService: ProductService) {

@@ -1,5 +1,4 @@
 export interface IQuestion {
-  clientname: string
+  clientName: string
   phone: string
-  time: string
 }

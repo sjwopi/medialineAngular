@@ -1,5 +1,14 @@
-<div>
-  <button *ngIf="isLogin" (click)="openCreate()" style="padding: 16px 20px; border-radius: 10px; border: 2px solid black;">+</button>
+<div class="content">
+  
+<app-admin-panel
+  [controls]="this.adminPanelControls"
+  title="Создание новости"
+  typePanel="{{adminPanelType}}"
+  typeItem="{{adminPanelItemType}}"
+></app-admin-panel>
+
+
+<!--   <button *ngIf="isLogin" (click)="openCreate()" style="padding: 16px 20px; border-radius: 10px; border: 2px solid black;">+</button>
 
   <div *ngIf="isLogin" id="createNews" class="div">
     <form [formGroup]="newsCreateForm" (submit)="submitCreate()">
@@ -10,21 +19,20 @@
       <input formControlName="newstime">
       <div *ngIf="newsCreateForm.get('newstime')?.invalid">newstime is required.</div>
   
-      <input formControlName="newstext">
+      <textarea formControlName="newstext"></textarea>
       <div *ngIf="newsCreateForm.get('newstext')?.invalid">newstext is required.</div>
   
-      <input formControlName="newsimage" />
-      <div *ngIf="newsCreateForm.get('newstext')?.invalid">newsimage is required.</div>
-  
+
       <button style="background-color: green; padding: 20px; margin-left: 200px;" type="submit">create</button>
     </form>
   
     <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="closeCreate()">otmena</button>
+  </div> -->
+
+
+  <div class="news-list">
+    <app-news-item *ngFor="let news of newsService.news" [news]="news"></app-news-item>
   </div>
-
-
-
-  <app-news-item *ngFor="let news of newsService.news" [news]="news"></app-news-item>
 </div>
 
 
