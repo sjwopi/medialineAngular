@@ -40,6 +40,10 @@
     outline: none;
   }
 
+  &__error {
+    color: #fb2424;
+  }
+
   &__btns {
     display: flex;
     flex-direction: row;

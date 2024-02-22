@@ -23,13 +23,15 @@ import { ContactsComponent } from './ui/widgets/contacts/contacts.component';
 import { FilterNewsPipe } from './pipes/filter-news.pipe';
 
 import { NewsService } from './services/news.service';
-import { QuestionService } from './services/question.service';
 import { NewsItemComponent } from './ui/components/news-item/news-item.component';
 import { CatalogPageComponent } from './ui/pages/catalog-page/catalog-page.component';
 import { CatalogItemPageComponent } from './ui/pages/catalog-item-page/catalog-item-page.component';
 import { ProductCardComponent } from './ui/components/product-card/product-card.component';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
-import { AdminPanelComponent } from './ui/widgets/admin-panel/admin-panel.component';
+import { AdminPanelNewsComponent } from './ui/widgets/admin-panel-news/admin-panel-news.component';
+import { AdminPanelProductComponent } from './ui/widgets/admin-panel-product/admin-panel-product.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { FeedbackService } from './services/feedback.service';
 
 @NgModule({
   declarations: [
@@ -57,17 +59,20 @@ import { AdminPanelComponent } from './ui/widgets/admin-panel/admin-panel.compon
     FilterNewsPipe,
     ProductCardComponent,
     FilterProductPipe,
-    AdminPanelComponent
+    AdminPanelNewsComponent,
+    AdminPanelProductComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FileUploadModule
   ],
   providers: [
-    NewsService
+    NewsService,
+    FeedbackService
   ],
   bootstrap: [AppComponent]
 })

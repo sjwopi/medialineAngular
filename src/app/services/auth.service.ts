@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay, retry, tap } from 'rxjs';
 import { IUser } from '../models/user.model';
+import { BASE_URL } from 'global';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +13,24 @@ export class AuthService {
     email: "",
     password: ""
   };
+  baseUrl: string = BASE_URL;
 
   setToken(user: IUser) {
     localStorage.setItem('IsAuthToken', JSON.stringify(user.token));
   }
   getToken() {
-    return localStorage.getItem('IsAuthToken');
+    return JSON.parse(localStorage.getItem('IsAuthToken') ?? '');
   }
   delToken() {
     localStorage.removeItem('IsAuthToken');
   }
-  isLoggedIn() {
-    return this.getToken() !== null;
-  }
 
   login(userInfo: IUser): Observable<IUser> {
-    return this.http.post<IUser>(`http://localhost:8080/api/admin/login`, userInfo).pipe(
+    return this.http.post<IUser>(`${this.baseUrl}/admin/login`, userInfo).pipe(
       delay(200),
       retry(2),
       tap((user) => {
         this.user = user;
-        console.log(user)
         localStorage.clear();
         this.setToken(this.user)
       })

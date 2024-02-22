@@ -1,4 +1,4 @@
-export interface IQuestion {
+export interface IFeedback {
   clientName: string
   phone: string
 }

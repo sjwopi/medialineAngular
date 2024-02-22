@@ -2,23 +2,19 @@
   <h2 class="title">Наши контакты</h2>
   <div class="contacts__container">
     
-    <form class="contacts__form" [formGroup]="questionsForm" (ngSubmit)="submitFormQuestions()">
+    <form class="contacts__form" [formGroup]="questionsForm">
       <h3 class="contacts__title">Остались вопросы?<br>Cпросите специалиста!</h3>
 
-      <input formControlName="clientname" placeholder="Ваше имя" class="contacts__input">
+      <input formControlName="clientName" placeholder="Ваше имя" class="contacts__input">
       <input formControlName="phone" placeholder="Ваш телефон" type="phone" class="contacts__input">
 
       <a class="contacts__subtext">
         Заполняя настоящую форму вы даете свое согласие на 
         <u>обработку своих персональныхданных.</u>
       </a>
-      <button type="submit" class="contacts__btn">отправить</button>
+      <button type="submit" class="contacts__btn" (click)="submitFormQuestions()">отправить</button>
 
     </form>
-
-
-
-
 
     <div class="contacts__text-list">
       <ul class="contacts__list">

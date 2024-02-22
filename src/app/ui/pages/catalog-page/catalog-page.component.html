@@ -1,9 +1,21 @@
-<div class="section">
-  <button (click)="changeSort($event)">all</button>
-  
-  <button *ngFor="let text of allTypesProduct" (click)="changeSort($event)">{{text}}</button>
+<section class="content">
+  <app-admin-panel-news title="Создание товара" [typePanel]="allPanelTypes.ItemCreate"></app-admin-panel-news>
+</section>
 
-  <br>
+<section class="content catalogPage">
+  <div class="catalogPage__sidebar">
+    <button class="catalogPage__sidebar-item active" (click)="changeSort($event, ['Все категории'])">Все категории</button>
 
-  <app-product-card *ngFor="let product of productService.products | filterProduct:sortByType" [product]="product"></app-product-card>
-</div>
+    <div class="catalogPage__sidebar-container" *ngFor="let cat of categor">
+      <button class="catalogPage__sidebar-item" *ngIf="cat.child.length < 1" (click)="changeSort($event, [cat.name])">{{cat.name}}</button>
+
+      <button class="catalogPage__sidebar-item" *ngIf="cat.child.length >= 1" (click)="openSubCat($event, cat.child)">{{cat.name}}</button>
+      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.child" (click)="changeSort($event, [catSub])">{{catSub}}</button>
+    </div>
+
+  </div>
+  <div class="catalogPage__list">
+    <app-product-card *ngFor="let product of this.products | filterProduct:sortByType"
+      [product]="product"></app-product-card>
+  </div>
+</section>

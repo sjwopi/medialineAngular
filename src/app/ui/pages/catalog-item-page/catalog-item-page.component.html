@@ -1,21 +1,35 @@
-<div style="display: block; background-color: rgb(255, 119, 119); margin: 20px 150px;">
-  <h1>{{product.title}}</h1>
-  <h2>{{product.category}}</h2>
-  <p>{{product.description}}</p>
-  <img src="{{product.imagePath}}">
+<div class="catalogItem content">
 
-  <ul *ngIf="product.peculiarities">
-    <h1>Особенности</h1>
-    <li *ngFor="let peculiarity of product.peculiarities">
-      {{peculiarity}}
-    </li>
-  </ul>
+  <h1 class="catalogItem__title title">{{product.title}}</h1>
 
-  <ul *ngIf="product.equipment">
-    <h1>Комплектация</h1>
-    <li *ngFor="let equipment of product.equipment">
-      {{equipment}}
-    </li>
-  </ul>
-  
+  <div class="catalogItem__container">
+    <img class="catalogItem__img" src="{{product.imagePath}}" alt="{{product.title}}">
+
+    <h2 class="catalogItem__subtitle">Особенности</h2>
+    <ul class="catalogItem__list" *ngIf="product.peculiarities">
+      <li class="catalogItem__listItem text" *ngFor="let peculiarity of product.peculiarities">
+        {{peculiarity}}
+      </li>
+    </ul>
+
+    <h2 class="catalogItem__subtitle">Комплектация</h2>
+    <ul class="catalogItem__list" *ngIf="product.equipment">
+      <li class="catalogItem__listItem text" *ngFor="let equipment of product.equipment">
+        {{equipment}}
+      </li>
+    </ul>
+
+    <h2 class="catalogItem__subtitle">Описание</h2>
+    <p class="catalogItem__text text" *ngFor="let p of product.description.split('\n')">{{p}}</p>
+  </div>
+
 </div>
+
+
+<!-- 
+<h2 class="newspage__title title">{{news.title}}</h2>
+<div class="newspage__container">
+  <img class="newspage__img"  src="{{news.imagePath}}" alt="фото с мероприятия">
+  <h3 class="newspage__subtitle title">{{news.time}}</h3>
+  <p class="newspage__text text" *ngFor="let p of news.text.split('\n')">{{p}}</p>
+</div> -->

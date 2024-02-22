@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FeedbackService } from 'src/app/services/feedback.service';
 
 @Component({
   selector: 'app-contacts',
@@ -9,21 +10,21 @@ import { Router } from '@angular/router';
 })
 export class ContactsComponent {
   questionsForm!: FormGroup;
-  //messageErr: string = "";
-  //isLoad: boolean = true;
 
   constructor(
-    /* private router: Router, */
-    /* public authService: AuthService */
+    public feedbackService: FeedbackService
   ) { }
 
   submitFormQuestions() {
-    console.log("asdfasf")
+    if (!this.questionsForm.invalid) {
+      console.log(this.questionsForm.value)
+      this.feedbackService.createFeedback(this.questionsForm.value).subscribe()
+    }
   }
 
   ngOnInit(): void {
     this.questionsForm = new FormGroup({
-      'clientname': new FormControl('', [Validators.required]),
+      'clientName': new FormControl('', [Validators.required]),
       'phone': new FormControl('', [Validators.required])
     });
   }

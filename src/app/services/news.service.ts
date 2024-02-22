@@ -1,17 +1,21 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, delay, retry, tap } from 'rxjs';
+import { Observable, catchError, delay, retry, tap } from 'rxjs';
 import { INewsItem } from 'src/app/models/news.model';
+import { AuthService } from './auth.service';
+import { BASE_URL } from 'global';
+import { Router } from '@angular/router';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class NewsService {
-  constructor(private http: HttpClient) { }
-  baseUrl: string =  'http://localhost:8080/api';
-  /* baseUrl: string =  'http://localhost:3000/'; */
-  jwt: string = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLnJ1Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzA4MDgwMjgyLCJleHAiOjE3MDgxNjY2ODJ9.oYjj1pXHm55c75rCrHolTG7wTY5THCSDuaLx9oUT37c';
+  constructor(private http: HttpClient, private authService: AuthService,
+    private router: Router) { }
+  baseUrl: string = BASE_URL;
+  jwt: string = this.authService.getToken() ?? '';
   news: INewsItem[] = [
     {
       time: "",
@@ -31,34 +35,55 @@ export class NewsService {
   getById(id: number): Observable<INewsItem> {
     return this.http.get<INewsItem>(`${this.baseUrl}/news/${id}`).pipe(
       delay(304),
-      retry(2)
+      retry(2),
+      catchError(() => {
+        this.router.navigate(['/news'])
+        return [];
+      })
     )
   }
-  editNews(item: INewsItem) {
-    const headers = new HttpHeaders({
+  edit(item: INewsItem) {
+    const headers: HttpHeaders = new HttpHeaders({
       'Authorization': this.jwt
     })
-    return this.http.patch<INewsItem[]>(`${this.baseUrl}/admin/news/${item.id}`, item, {headers}).pipe(
+    return this.http.patch<INewsItem[]>(`${this.baseUrl}/admin/news`, item, { headers }).pipe(
       delay(200),
       retry(2),
       tap()
     )
   }
-  createNews(item: INewsItem) {
+  create(item: INewsItem, file: any) {
     const headers = new HttpHeaders({
-      'Authorization': this.jwt
+      'Authorization': this.jwt,
+      
     })
-    return this.http.post<INewsItem>(`http://localhost:8080/api/admin/news`, item, {headers}).pipe(
+
+    let formData = new FormData();
+
+    formData.append(
+      "news",
+      new Blob([JSON.stringify(item)], {
+        type: "application/json"
+      })
+    );
+    formData.append(
+      "image",
+      new Blob([file], {
+        type: 'multipart/form-data'
+      })
+    );
+
+    return this.http.post<INewsItem>(`http://localhost:8080/api/admin/news`, formData, { headers }).pipe(
       delay(200),
       retry(2),
       tap()
     )
   }
-  deleteNews(id: number) {
+  delete(id: number) {
     const headers = new HttpHeaders({
       'Authorization': this.jwt
     })
-    return this.http.delete<INewsItem>(`${this.baseUrl}/admin/news/${id}`, {headers}).pipe(
+    return this.http.delete<INewsItem>(`${this.baseUrl}/admin/news?id=${id}`, { headers }).pipe(
       delay(200),
       retry(2),
       tap()

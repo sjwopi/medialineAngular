@@ -1,0 +1,62 @@
+<section *ngIf="isLogin">
+  <div *ngIf="isOpen" class="adminPanel">
+    <h1 class="adminPanel__title">{{title}}</h1>
+
+    <form class="adminPanel__form" [formGroup]="adminForm">
+
+      <input placeholder="Заголовок" class="adminPanel__input" formControlName="title">
+      <div class="adminPanel__err" *ngIf="adminForm.get('title')?.invalid">
+        <span *ngIf="adminForm.get('title')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+        <span *ngIf="adminForm.get('title')?.['errors']?.['minlength']">Введите минимум 2 символа.</span>
+        <span *ngIf="adminForm.get('title')?.['errors']?.['maxlength']">Максимум 60 символовю</span>
+      </div>
+
+      <input placeholder="Дата" class="adminPanel__input" formControlName="time">
+      <div class="adminPanel__err" *ngIf="adminForm.get('time')?.invalid">
+        <span *ngIf="adminForm.get('time')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+        <span *ngIf="adminForm.get('time')?.['errors']?.['pattern']">Введите дату в формате 2024-12-12</span>
+      </div>
+
+      <textarea placeholder="Содержание" class="adminPanel__input adminPanel__input_textarea"
+        formControlName="text"></textarea>
+      <div class="adminPanel__err" *ngIf="adminForm.get('text')?.invalid">
+        <span *ngIf="adminForm.get('text')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+        <span *ngIf="adminForm.get('text')?.['errors']?.['minlength']">Введите минимум 2 символа.</span>
+      </div>
+
+      <input placeholder="Картинка" class="adminPanel__input" formControlName="imagePath" />
+      <div class="adminPanel__err" *ngIf="adminForm.get('imagePath')?.invalid">
+        <span *ngIf="adminForm.get('imagePath')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+      </div>
+
+      <div class="adminPanel__btns">
+        <button (click)="changeVisibility()" class="adminPanel__btn adminPanel__btn_back">Отмена</button>
+
+        <button *ngIf="this.typePanel == allTypesPanel.ItemCreate" class="adminPanel__btn"
+          (click)="this.submitCreate()">Создать</button>
+        <button *ngIf="this.typePanel == allTypesPanel.ItemEdit" class="adminPanel__btn"
+          (click)="this.submitEdit()">Редактировать</button>
+
+        <button *ngIf="this.typePanel == allTypesPanel.ItemEdit" class="adminPanel__btn adminPanel__btn_delete"
+          (click)="this.changeVisibilityDelete()">Удалить</button>
+      </div>
+    </form>
+  </div>
+
+
+  <div *ngIf="!isOpen" class="adminPanel__open-btns">
+    <button class="adminPanel__btn" (click)="changeVisibility()">Открыть админ панель</button>
+  </div>
+</section>
+
+
+<!-- модалка удаления -->
+<div *ngIf="this.isOpenDelete" class="adminPanel__modal-overlay" (click)="this.changeVisibilityDelete()"></div>
+<div *ngIf="this.isOpenDelete" class="adminPanel__modal-container">
+  <h2 class="adminPanel__title">Вы действительно хотите удалить?</h2>
+
+  <div class="adminPanel__btns">
+    <button (click)="changeVisibilityDelete()" class="adminPanel__btn adminPanel__btn_back">Отмена</button>
+    <button class="adminPanel__btn adminPanel__btn_delete" (click)="this.delete()">Удалить</button>
+  </div>
+</div>

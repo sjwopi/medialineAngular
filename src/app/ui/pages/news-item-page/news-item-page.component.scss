@@ -4,6 +4,7 @@
     float: left;
     margin-bottom: 100px;
   }
+
   &__title {}
 
   &__subtitle {
@@ -13,6 +14,7 @@
     margin: 0 0 20px 0;
     padding: 0;
   }
+
   &__img {
     float: left;
     min-width: 40%;
@@ -20,6 +22,7 @@
     border-radius: 10px;
     box-shadow: 5px 5px 20px 0px #00000033;
   }
+
   &__text {
     display: block;
     text-indent: 30px;
@@ -89,11 +92,13 @@
       border-radius: 5px;
     }
   }
+
   &__btns {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
+
   &__btns_h {
     display: flex;
     flex-direction: row;
@@ -117,9 +122,11 @@
     font-weight: 400;
     line-height: 22px;
     transition: all .3s;
+
     &:disabled {
       opacity: 0.5;
     }
+
     &_back {
       text-decoration: none;
       background: gray;
@@ -132,11 +139,13 @@
       opacity: 0.8;
     }
   }
+
   &__register {
     display: flex;
     color: black;
     align-items: center;
     margin-left: 8px;
+
     &:hover {
       opacity: 0.8;
     }
@@ -148,10 +157,12 @@
     color: red;
     margin: 0 0 20px 0;
   }
+
   .has-error {
     display: block;
   }
 }
+
 .login {
   &__input {
     width: calc(100% - 24px);

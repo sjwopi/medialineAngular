@@ -4,18 +4,19 @@
 
     <input id="email" formControlName="email" placeholder="email" class="login__input" required minlength="4"
       maxlength="40">
-    <div class="login__error"
-      [ngClass]="{'has-error': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
-      <!-- <span *ngIf="loginForm.get('email')?.['errors']?.['required']">Поле email не может быть пустым</span> -->
-    </div>
+      <div class="login__error"
+        *ngIf="loginForm.get('email')?.invalid">
+        <span *ngIf="loginForm.get('email')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+        <span *ngIf="loginForm.get('email')?.['errors']?.['pattern']">Введите корректный e-mail</span>
+      </div>
 
 
     <input formControlName="password" placeholder="Password" type="password" class="login__input" required
       maxlength="20">
     <div class="login__error"
-      [ngClass]="{'has-error': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
-      <!-- <span *ngIf="loginForm.get('password')?.['errors']?.['required']">Поле password не может быть пустым</span>
-      <span *ngIf="loginForm.get('password')?.['errors']?.['minlength']">Поле password должно иметь минимум 8 символов</span> -->
+      *ngIf="loginForm.get('password')?.invalid">
+      <span *ngIf="loginForm.get('password')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+      <span *ngIf="loginForm.get('password')?.['errors']?.['minlength']">Пароль должен быть больше 8 символов.</span>
     </div>
 
     <div class="login__btns">

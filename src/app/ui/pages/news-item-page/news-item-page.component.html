@@ -1,19 +1,21 @@
-<section class="newspage content">
-  <app-admin-panel
-    [controls]="this.adminPanelControls"
+<!-- <section *ngIf="this.news.title == ''" class="content">
+  <a routerLink="/" class="newspage__title newspage__title_err">Такой новости не существует. Вернитесь на гланую.</a>
+</section> -->
+
+<section *ngIf="this.news.title != ''" class="newspage content">
+  
+  <app-admin-panel-news *ngIf="this.news.title !== ''"
     title="Редактирование новости"
-    typePanel="{{adminPanelType}}"
-    typeItem="{{adminPanelItemType}}"
-    [item]="this.news"
-    class="content"
-  ></app-admin-panel>
+    [typePanel]="panelTypes.ItemEdit"
+    [news]="this.news"
+  ></app-admin-panel-news>
 
 
   <h2 class="newspage__title title">{{news.title}}</h2>
   <div class="newspage__container">
-    <img class="newspage__img"  src="{{news.imagePath}}" alt="фото с мероприятия">
+    <img class="newspage__img"  src="http://localhost:8080/image/{{news.imagePath}}" alt="фото с мероприятия">
     <h3 class="newspage__subtitle title">{{news.time}}</h3>
-    <p class="newspage__text text" *ngFor="let par of news.text.split('ENTER')">{{par}}</p>
-    <!-- <p class="newspage__text text">{{news.text}}</p> -->
+    <p class="newspage__text text" *ngFor="let p of news.text.split('\n')">{{p}}</p>
   </div>
+
 </section>

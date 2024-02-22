@@ -1,38 +1,9 @@
-<div class="content">
-  
-<app-admin-panel
-  [controls]="this.adminPanelControls"
-  title="Создание новости"
-  typePanel="{{adminPanelType}}"
-  typeItem="{{adminPanelItemType}}"
-></app-admin-panel>
+<section class="content">
+  <app-admin-panel-news title="Создание новости" [typePanel]="allPanelTypes.ItemCreate"></app-admin-panel-news>
+</section>
 
-
-<!--   <button *ngIf="isLogin" (click)="openCreate()" style="padding: 16px 20px; border-radius: 10px; border: 2px solid black;">+</button>
-
-  <div *ngIf="isLogin" id="createNews" class="div">
-    <form [formGroup]="newsCreateForm" (submit)="submitCreate()">
-  
-      <input formControlName="newsname">
-      <div *ngIf="newsCreateForm.get('newsname')?.invalid">newsname is required.</div>
-  
-      <input formControlName="newstime">
-      <div *ngIf="newsCreateForm.get('newstime')?.invalid">newstime is required.</div>
-  
-      <textarea formControlName="newstext"></textarea>
-      <div *ngIf="newsCreateForm.get('newstext')?.invalid">newstext is required.</div>
-  
-
-      <button style="background-color: green; padding: 20px; margin-left: 200px;" type="submit">create</button>
-    </form>
-  
-    <button style="background-color: red; padding: 20px; margin-left: 200px;" (click)="closeCreate()">otmena</button>
-  </div> -->
-
-
+<section class="content">
   <div class="news-list">
-    <app-news-item *ngFor="let news of newsService.news" [news]="news"></app-news-item>
+    <app-news-item *ngFor="let news of this.news" [news]="news"></app-news-item>
   </div>
-</div>
-
-
+</section>

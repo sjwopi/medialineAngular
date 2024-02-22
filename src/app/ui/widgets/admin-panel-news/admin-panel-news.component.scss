@@ -47,10 +47,15 @@
     line-height: 17px;
     font-weight: 400;
     outline: none;
+    margin: 5px 0;
 
     &_textarea {
       height: 200px;
     }
+  }
+
+  &__err {
+    color:#fb2424;
   }
 
   &__btns {
@@ -88,6 +93,32 @@
     width: fit-content;
     margin: 0 0 60px 0;
   }
+
+  &__modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000055;
+  }
+  &__modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  
 }
 
 @media screen and (max-width: 600px) {
