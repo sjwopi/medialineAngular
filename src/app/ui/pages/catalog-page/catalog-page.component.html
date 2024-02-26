@@ -1,21 +1,25 @@
 <section class="content">
-  <app-admin-panel-news title="Создание товара" [typePanel]="allPanelTypes.ItemCreate"></app-admin-panel-news>
+  <app-admin-panel-product title="Создание товара" [typePanel]="allPanelTypes.ItemCreate"></app-admin-panel-product>
 </section>
 
 <section class="content catalogPage">
   <div class="catalogPage__sidebar">
-    <button class="catalogPage__sidebar-item active" (click)="changeSort($event, ['Все категории'])">Все категории</button>
-
+    
     <div class="catalogPage__sidebar-container" *ngFor="let cat of categor">
-      <button class="catalogPage__sidebar-item" *ngIf="cat.child.length < 1" (click)="changeSort($event, [cat.name])">{{cat.name}}</button>
+      <button class="catalogPage__sidebar-item" *ngIf="!cat.subcategories" (click)="changeSort($event, cat.id!.toString())">{{cat.name}}</button>
 
-      <button class="catalogPage__sidebar-item" *ngIf="cat.child.length >= 1" (click)="openSubCat($event, cat.child)">{{cat.name}}</button>
-      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.child" (click)="changeSort($event, [catSub])">{{catSub}}</button>
+      <button class="catalogPage__sidebar-item" *ngIf="cat.subcategories" (click)="openSubCat($event, cat.id!.toString())">{{cat.name}}</button>
+      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.subcategories" (click)="changeSort($event, catSub.id!.toString())">{{catSub.name}}</button>
     </div>
 
+    <app-admin-panel-categories></app-admin-panel-categories>
+
   </div>
+
   <div class="catalogPage__list">
-    <app-product-card *ngFor="let product of this.products | filterProduct:sortByType"
+    <app-loading *ngIf="isLoad"></app-loading>
+    <app-product-card *ngFor="let product of this.products! | filterProduct:sortByType"
       [product]="product"></app-product-card>
   </div>
+
 </section>

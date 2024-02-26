@@ -16,11 +16,14 @@
 
       <div>
         <p>Дата</p>
-        <input placeholder="____-__-__" class="adminPanel__input" formControlName="time" (keyup)="inputTime($event)"
+        <input placeholder="гггг-мм-дд" class="adminPanel__input" formControlName="time" (keyup)="inputTime($event)"
           maxlength="10">
         <div class="adminPanel__err" *ngIf="adminForm.get('time')?.invalid">
           <span *ngIf="adminForm.get('time')?.['errors']?.['required']">Это поле не может быть пустым.</span>
           <span *ngIf="adminForm.get('time')?.['errors']?.['pattern']">Введите дату в корректном формате</span>
+        </div>
+        <div class="adminPanel__err" *ngIf="!adminForm.get('time')?.invalid && messageErrorDate">
+          {{messageErrorDate}}
         </div>
       </div>
 
@@ -34,12 +37,17 @@
         </div>
       </div>
 
-      <div>
+      <div *ngIf="this.typePanel == allTypesPanel.ItemCreate">
         <p>Изображение</p>
-        <input type="file" placeholder="Картинка" class="adminPanel__input" formControlName="imagePath" (change)="changeFile($event)" />
-        <div class="adminPanel__err" *ngIf="adminForm.get('imagePath')?.invalid">
-          <span *ngIf="adminForm.get('imagePath')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+        <input type="file" class="adminPanel__input" formControlName="image" (change)="changeFile($event)" />
+        <div class="adminPanel__err" *ngIf="adminForm.get('image')?.invalid">
+          <span *ngIf="adminForm.get('image')?.['errors']?.['required']">Это поле не может быть пустым.</span>
         </div>
+      </div>
+
+      <div *ngIf="this.typePanel == allTypesPanel.ItemEdit">
+        <p>Изменить изображение <u><i>(необязательно)</i></u></p>
+        <input type="file" class="adminPanel__input" formControlName="imageEdit" (change)="changeFile($event)" />
       </div>
 
       <div class="adminPanel__btns">

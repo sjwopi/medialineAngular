@@ -4,6 +4,7 @@
 
 <section class="content">
   <div class="news-list">
+    <app-loading *ngIf="isLoad"></app-loading>
     <app-news-item *ngFor="let news of this.news" [news]="news"></app-news-item>
   </div>
 </section>

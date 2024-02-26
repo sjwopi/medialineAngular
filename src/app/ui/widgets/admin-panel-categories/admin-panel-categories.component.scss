@@ -1,9 +1,7 @@
 .adminPanel {
-  min-height: 350px;
+  min-height: 300px;
   width: 100%;
   max-width: 900px;
-
-  margin-bottom: 100px;
   padding: 35px;
 
   border-radius: 10px;
@@ -14,7 +12,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
 
   &_open {
     min-height: 0;
@@ -26,6 +23,7 @@
     font-weight: 500;
     width: 100%;
     text-align: start;
+    margin: 0;
   }
 
   &__form {
@@ -34,6 +32,10 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 30px;
+
+    &:first-child {
+      margin-bottom: 60px;
+    }
   }
 
   &__input {
@@ -52,10 +54,16 @@
     &_textarea {
       height: 200px;
     }
+
+    &_select {
+      padding: 8px 12px 8px 12px;
+      display: block;
+      position: relative;
+    }
   }
 
   &__err {
-    color:#fb2424;
+    color: #fb2424;
   }
 
   &__btns {
@@ -86,12 +94,10 @@
   }
 
   &__open-btns {
-    padding: 20px;
+    width: 100%;
+    padding: 10px;
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
-    width: fit-content;
-    margin: 0 0 60px 0;
+    text-align: center;
   }
 
   &__modal-overlay {
@@ -103,6 +109,7 @@
     height: 100vh;
     background-color: #00000055;
   }
+
   &__modal-container {
     position: fixed;
     top: 50%;
@@ -118,6 +125,17 @@
     align-items: center;
     gap: 30px;
   }
+
+  &__contentrow {
+    display: flex;
+    flex-direction: row;
+    min-width: 40vw;
+    gap: 40px;
+  }
+
+  &__content {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -127,6 +145,7 @@
       align-items: start;
       gap: 15px;
     }
+
     &__btn {
       padding: 10px 20px;
     }

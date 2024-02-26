@@ -5,6 +5,7 @@ import { Observable, catchError, delay, retry, tap } from 'rxjs';
 import { BASE_URL } from 'global';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { ICategory } from '../models/categories.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,6 @@ export class ProductService {
       category: "",
     }
   ]
-
   getAll(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(`${this.baseUrl}/products`).pipe(
       delay(304),
@@ -34,13 +34,10 @@ export class ProductService {
   getById(id: number): Observable<IProduct> {
     return this.http.get<IProduct>(`${this.baseUrl}/products/${id}`).pipe(
       delay(304),
-      retry(2),
-      catchError(() => {
-        this.router.navigate(['/products'])
-        return [];
-      })
+      retry(2)
     )
   }
+
   edit(item: IProduct) {
     const headers: HttpHeaders = new HttpHeaders({
       'Authorization': this.jwt
@@ -51,11 +48,28 @@ export class ProductService {
       tap()
     )
   }
-  create(item: IProduct) {
+  create(item: any, file: any) {
     const headers = new HttpHeaders({
-      'Authorization': this.jwt
+      'Authorization': this.jwt,
+      
     })
-    return this.http.post<IProduct>(`http://localhost:8080/api/admin/products`, item, { headers }).pipe(
+
+    let formData = new FormData();
+    Object.keys(item).forEach((key: string)=> {
+      console.log(key)
+      console.log(item[key])
+      formData.append(
+        key,
+        /* @ts-ignore */
+        item[key]
+      );
+    })
+    formData.append(
+      "image",
+      file
+    );
+
+    return this.http.post<IProduct>(`${this.baseUrl}/admin/products`, formData, { headers }).pipe(
       delay(200),
       retry(2),
       tap()

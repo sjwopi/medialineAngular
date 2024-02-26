@@ -1,0 +1,134 @@
+.adminPanel {
+  min-height: 350px;
+  width: 100%;
+  max-width: 900px;
+
+  margin-bottom: 100px;
+  padding: 35px;
+
+  border-radius: 10px;
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+
+  &_open {
+    min-height: 0;
+    padding: 10px;
+  }
+
+  &__title {
+    font-size: 30px;
+    font-weight: 500;
+    width: 100%;
+    text-align: start;
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+  }
+
+  &__input {
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid #7d9cd7;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+    outline: none;
+    margin: 5px 0;
+
+    &_textarea {
+      height: 200px;
+    }
+  }
+
+  &__err {
+    color:#fb2424;
+  }
+
+  &__btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    padding: 12px 60px;
+    background-color: #4979d2;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+
+    &_back {
+      background-color: #aaa;
+    }
+
+    &_delete {
+      background-color: #fb2424;
+    }
+  }
+
+  &__open-btns {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    margin: 0 0 60px 0;
+  }
+
+  &__modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000055;
+  }
+  &__modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .adminPanel {
+    &__btns {
+      flex-direction: column;
+      align-items: start;
+      gap: 15px;
+    }
+    &__btn {
+      padding: 10px 20px;
+    }
+  }
+}

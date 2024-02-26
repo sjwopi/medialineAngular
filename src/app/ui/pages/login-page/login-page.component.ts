@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,16 +10,49 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-  loginForm!: FormGroup;
-  messageErr: string = "";
-  isLoad: boolean = true;
-
   constructor(
     public authService: AuthService
   ) { }
 
+  loginForm!: FormGroup;
+  messageErr: string = "";
+  isLoad: boolean = false;
+  isOpenComplete: boolean = false;
+  isComplete: boolean = false;
+  messageAfterLogin?: string;
+  messageBtnAfterLogin?: string;
+
+  changeVisibilityComplete() {
+    document.body.classList.toggle('open')
+    this.isOpenComplete = !this.isOpenComplete;
+  }
+
   submitLogin() {
-    this.authService.login(this.loginForm.value).subscribe()
+    if (!this.loginForm.invalid) {
+      this.isLoad = true;
+      this.changeVisibilityComplete();
+
+      this.authService.login(this.loginForm.value).subscribe(item => {
+        this.isComplete = true
+        this.messageAfterLogin = 'Успешно!';
+        this.messageBtnAfterLogin = 'Продолжить';
+        this.isLoad = false;
+      }, (error) => {
+        this.isComplete = false
+        this.messageBtnAfterLogin = 'Попробовать еще раз';
+        switch (error.status) {
+          case 403:
+            this.messageAfterLogin = 'Неверный логин или пароль!';
+            break;
+          case 500:
+            this.messageAfterLogin = 'Ошибка сервера!';
+            break;
+          default:
+            this.messageAfterLogin = 'Что-то пошло не так!';
+        }
+        this.isLoad = false;
+      });
+    }
   }
 
   ngOnInit(): void {

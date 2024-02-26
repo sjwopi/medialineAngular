@@ -1,0 +1,93 @@
+<section *ngIf="isLogin">
+
+  <div *ngIf="isOpen" class="adminPanel__modal-overlay" (click)="this.changeVisibility()"></div>
+  <div *ngIf="isOpen" class="adminPanel__modal-container">
+
+    <form class="adminPanel__form" [formGroup]="adminFormCreate">
+
+      <h1 class="adminPanel__title">Создание</h1>
+
+      <div class="adminPanel__contentrow">
+        <div class="adminPanel__content">
+          <p>Добавить категорию</p>
+          <input placeholder="Название" class="adminPanel__input" formControlName="category">
+          <div class="adminPanel__err" *ngIf="adminFormCreate.get('newCategory')?.invalid">
+            <span *ngIf="adminFormCreate.get('title')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+          </div>
+        </div>
+
+
+        <div class="adminPanel__content">
+          <p>Категория "Родитель"</p>
+          <select class="adminPanel__input adminPanel__input_select" formControlName="parentcategory">
+            <option *ngFor="let cat of categories" [ngValue]="cat.name">
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="adminPanel__btns">
+        <button class="adminPanel__btn" (click)="addCategory()">Создать</button>
+      </div>
+    </form>
+
+    <form class="adminPanel__form" [formGroup]="adminFormEdit">
+
+      <div class="adminPanel__contentrow">
+        <h1 class="adminPanel__title">Редактирование</h1>
+        <div class="adminPanel__content">
+          <p>Выберите категорию для редактирования</p>
+          <select class="adminPanel__input adminPanel__input_select" formControlName="parentcategory">
+            <option *ngFor="let cat of categories" [ngValue]="cat.name">
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="adminPanel__contentrow">
+        <div class="adminPanel__content">
+          <p>Новое название</p>
+          <input placeholder="Название" class="adminPanel__input" formControlName="parentcategory">
+          <div class="adminPanel__err" *ngIf="adminFormCreate.get('newCategory')?.invalid">
+            <span *ngIf="adminFormCreate.get('title')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+          </div>
+        </div>
+
+
+        <div class="adminPanel__content">
+          <p>Категория "Родитель"</p>
+          <select class="adminPanel__input adminPanel__input_select" formControlName="category">
+            <option *ngFor="let cat of categories" [ngValue]="cat.name">
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="adminPanel__btns">
+        <button class="adminPanel__btn">Редактировать</button>
+        <button class="adminPanel__btn adminPanel__btn_delete" (click)="this.changeVisibilityDelete()">Удалить</button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="adminPanel__open-btns">
+    <button class="adminPanel__btn" (click)="changeVisibility()">Изменить</button>
+  </div>
+
+</section>
+
+
+<!-- модалка удаления -->
+<div *ngIf="this.isOpenDelete" class="adminPanel__modal-overlay" (click)="this.changeVisibilityDelete()"></div>
+<div *ngIf="this.isOpenDelete" class="adminPanel__modal-container">
+  <h2 class="adminPanel__title">Вы действительно хотите удалить?</h2>
+
+  <div class="adminPanel__btns">
+    <button (click)="changeVisibilityDelete()" class="adminPanel__btn adminPanel__btn_back">Отмена</button>
+    <!-- <button class="adminPanel__btn adminPanel__btn_delete" (click)="this.delete()">Удалить</button> -->
+  </div>
+</div>

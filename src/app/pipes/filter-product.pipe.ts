@@ -5,19 +5,14 @@ import { IProduct } from '../models/product.model';
   name: 'filterProduct'
 })
 export class FilterProductPipe implements PipeTransform {
-  transform(products: IProduct[], type: string[]): IProduct[] {
-    if (type[0].toLowerCase() == "все категории") {
-      return products;
+  transform(products: any[] | undefined, type: string): any[] {
+    
+    if (products) {
+      if (type == "1") {
+        return products.slice(0, 12);
+      }
+      return products.filter(p => (p.category.id === type && !p.subcategory));
     }
-    let result: IProduct[] = [];
-
-    type.forEach(item => {
-      let temp = products.filter(p => {
-        return p.category.toLowerCase() === item.toLowerCase()
-      });
-      result.push(...temp)
-    })
-
-    return result;
+    return [];
   }
 }

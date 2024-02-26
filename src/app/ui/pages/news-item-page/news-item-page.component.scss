@@ -18,6 +18,7 @@
   &__img {
     float: left;
     min-width: 40%;
+    max-width: 40%;
     margin: 0 50px 30px 0;
     border-radius: 10px;
     box-shadow: 5px 5px 20px 0px #00000033;
@@ -30,155 +31,29 @@
   }
 }
 
-
-.login {
-  width: 360px;
-  min-height: 305px;
-  padding: 35px;
-  border-radius: 10px;
-  position: relative;
-  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
-
-  &__form {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  &__title {
-    width: 100%;
-    text-align: center;
-    color: black;
-    margin: 0 0 44px 0;
-    padding: 0;
-    font-size: 24px;
-    font-weight: 900;
-    line-height: 29px;
-  }
-
-  &__name {
-    width: calc(100% - 24px);
-    height: 35px;
-    padding: 4px 12px;
-    margin: 0 0 20px 0;
-    border: none;
-    font-size: 14px;
-    line-height: 17px;
-    font-weight: 400;
-    outline: none;
-
-    &:focus {
-      border: 2px solid red;
-      border-radius: 5px;
-    }
-  }
-
-  &__password {
-    width: calc(100% - 24px);
-    height: 35px;
-    padding: 4px 12px;
-    margin: 0 0 20px 0;
-    border: none;
-    border-bottom: 1px solid red;
-    font-size: 14px;
-    line-height: 17px;
-    font-weight: 400;
-    outline: none;
-
-    &:focus {
-      border: 2px solid red;
-      border-radius: 5px;
-    }
-  }
-
-  &__btns {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  &__btns_h {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    color: blue;
-  }
-
-  &__submit-form {
-    display: inline-block;
-    background: blue;
-    color: white;
-    width: 40%;
-    height: 40px;
-    padding: 0;
-    margin: 12px 0 0 0;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 22px;
-    transition: all .3s;
-
-    &:disabled {
-      opacity: 0.5;
+@media screen and (max-width: 1000px) {
+  .newspage {
+    &__container {
+      width: calc(100% - 40px);
+      margin: 0 20px 60px 20px;
+      float: left;
     }
 
-    &_back {
-      text-decoration: none;
-      background: gray;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    &__subtitle {
+      text-indent: 0;
+      font-size: 18px;
+      line-height: 22px;
+      margin: 0 0 15px 0;
     }
 
-    &:hover {
-      opacity: 0.8;
+    &__img {
+      min-width: 100%;
+      max-width: 100%;
     }
-  }
 
-  &__register {
-    display: flex;
-    color: black;
-    align-items: center;
-    margin-left: 8px;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-
-  &__error {
-    font-size: 14px;
-    display: none;
-    color: red;
-    margin: 0 0 20px 0;
-  }
-
-  .has-error {
-    display: block;
-  }
-}
-
-.login {
-  &__input {
-    width: calc(100% - 24px);
-    height: 35px;
-    padding: 4px 12px;
-    margin: 0 0 20px 0;
-    border: none;
-    border-bottom: 1px solid red;
-    font-size: 14px;
-    line-height: 17px;
-    font-weight: 400;
-    outline: none;
-
-    &:focus {
-      border: 2px solid red;
-      border-radius: 5px;
+    &__text {
+      text-indent: 0;
+      margin-bottom: 15px;
     }
   }
 }

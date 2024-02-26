@@ -1,3 +1,5 @@
+import { ICategory } from "./categories.model"
+
 export interface IProduct {
   id?: number
   title: string
@@ -7,3 +9,4 @@ export interface IProduct {
   peculiarities?: string[]
   equipment?: string[]
 }
+

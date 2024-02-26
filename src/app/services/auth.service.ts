@@ -16,11 +16,22 @@ export class AuthService {
   baseUrl: string = BASE_URL;
 
   setToken(user: IUser) {
+    localStorage.setItem('Time', (+new Date() + (3600 * 1000 * 24)).toString());
     localStorage.setItem('IsAuthToken', JSON.stringify(user.token));
   }
+
   getToken() {
     return JSON.parse(localStorage.getItem('IsAuthToken') ?? '');
   }
+  
+  isLogin() {
+    if (parseInt(JSON.parse(localStorage.getItem('Time') ?? '')) >= +new Date() && JSON.parse(localStorage.getItem('IsAuthToken') ?? '') != '') {
+      return true;
+    }
+    localStorage.clear;
+    return false;
+  }
+
   delToken() {
     localStorage.removeItem('IsAuthToken');
   }

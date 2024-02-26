@@ -20,8 +20,6 @@ import { ConditionsComponent } from './ui/blocks/conditions/conditions.component
 import { ManufacturersComponent } from './ui/blocks/manufacturers/manufacturers.component';
 import { ContactsComponent } from './ui/widgets/contacts/contacts.component';
 
-import { FilterNewsPipe } from './pipes/filter-news.pipe';
-
 import { NewsService } from './services/news.service';
 import { NewsItemComponent } from './ui/components/news-item/news-item.component';
 import { CatalogPageComponent } from './ui/pages/catalog-page/catalog-page.component';
@@ -32,6 +30,8 @@ import { AdminPanelNewsComponent } from './ui/widgets/admin-panel-news/admin-pan
 import { AdminPanelProductComponent } from './ui/widgets/admin-panel-product/admin-panel-product.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FeedbackService } from './services/feedback.service';
+import { LoadingComponent } from './ui/components/loading/loading.component';
+import { AdminPanelCategoriesComponent } from './ui/widgets/admin-panel-categories/admin-panel-categories.component';
 
 @NgModule({
   declarations: [
@@ -56,11 +56,12 @@ import { FeedbackService } from './services/feedback.service';
     CatalogPageComponent,
     CatalogItemPageComponent,
 
-    FilterNewsPipe,
     ProductCardComponent,
     FilterProductPipe,
     AdminPanelNewsComponent,
-    AdminPanelProductComponent
+    AdminPanelProductComponent,
+    LoadingComponent,
+    AdminPanelCategoriesComponent
   ],
   imports: [
     BrowserModule,

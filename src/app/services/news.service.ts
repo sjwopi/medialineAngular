@@ -35,18 +35,31 @@ export class NewsService {
   getById(id: number): Observable<INewsItem> {
     return this.http.get<INewsItem>(`${this.baseUrl}/news/${id}`).pipe(
       delay(304),
-      retry(2),
-      catchError(() => {
-        this.router.navigate(['/news'])
-        return [];
-      })
+      retry(2)
     )
   }
-  edit(item: INewsItem) {
+  edit(item: INewsItem, file?: any) {
     const headers: HttpHeaders = new HttpHeaders({
       'Authorization': this.jwt
     })
-    return this.http.patch<INewsItem[]>(`${this.baseUrl}/admin/news`, item, { headers }).pipe(
+
+    let formData = new FormData();
+    Object.keys(item).forEach((key: string)=> {
+      formData.append(
+        key,
+        /* @ts-ignore */
+        item[key]
+      );
+    })
+    console.log(file)
+    if (file) {
+      formData.append(
+        "image",
+        file
+      );
+    }
+
+    return this.http.patch<INewsItem>(`${this.baseUrl}/admin/news`, formData, { headers }).pipe(
       delay(200),
       retry(2),
       tap()
@@ -59,18 +72,16 @@ export class NewsService {
     })
 
     let formData = new FormData();
-
-    formData.append(
-      "news",
-      new Blob([JSON.stringify(item)], {
-        type: "application/json"
-      })
-    );
+    Object.keys(item).forEach((key: string) => {
+      formData.append(
+        key,
+        /* @ts-ignore */
+        item[key]
+      );
+    })
     formData.append(
       "image",
-      new Blob([file], {
-        type: 'multipart/form-data'
-      })
+      file
     );
 
     return this.http.post<INewsItem>(`http://localhost:8080/api/admin/news`, formData, { headers }).pipe(
