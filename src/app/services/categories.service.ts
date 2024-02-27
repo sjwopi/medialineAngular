@@ -25,6 +25,7 @@ export class CategoriesService {
       tap(categories => this.categories = categories)
     )
   }
+
   createCategory(item: ICategory): Observable<ICategory> {
     const headers: HttpHeaders = new HttpHeaders({
       'Authorization': this.jwt
@@ -38,6 +39,24 @@ export class CategoriesService {
       );
     })
     return this.http.post<ICategory>(`${this.baseUrl}/admin/category`, formData, { headers }).pipe(
+      delay(304),
+      retry(2)
+    )
+  }
+
+  editCategory(item: ICategory): Observable<ICategory> {
+    const headers: HttpHeaders = new HttpHeaders({
+      'Authorization': this.jwt
+    })
+    let formData = new FormData();
+    Object.keys(item).forEach((key: string)=> {
+      formData.append(
+        key,
+        /* @ts-ignore */
+        item[key]
+      );
+    })
+    return this.http.patch<ICategory>(`${this.baseUrl}/admin/category`, formData, { headers }).pipe(
       delay(304),
       retry(2)
     )

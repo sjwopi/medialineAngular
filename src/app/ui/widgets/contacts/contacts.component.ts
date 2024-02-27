@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { FeedbackService } from 'src/app/services/feedback.service';
 
 @Component({
@@ -12,20 +13,31 @@ export class ContactsComponent {
   questionsForm!: FormGroup;
 
   constructor(
-    public feedbackService: FeedbackService
+    public feedbackService: FeedbackService,
+    private recaptchaV3Service: ReCaptchaV3Service,
   ) { }
+
+
+  executeImportantAction(): void {
+    this.recaptchaV3Service.execute('importantAction').subscribe((token) => {
+      this.questionsForm.controls['captchaToken'].setValue(token);
+      this.submitFormQuestions();
+    });
+  }
 
   submitFormQuestions() {
     if (!this.questionsForm.invalid) {
-      console.log(this.questionsForm.value)
-      this.feedbackService.createFeedback(this.questionsForm.value).subscribe()
+      this.feedbackService.createFeedback(this.questionsForm.value).subscribe(() => {
+        this.questionsForm.reset();
+      })
     }
   }
 
   ngOnInit(): void {
     this.questionsForm = new FormGroup({
       'clientName': new FormControl('', [Validators.required]),
-      'phone': new FormControl('', [Validators.required])
+      'phone': new FormControl('', [Validators.required]),
+      'captchaToken': new FormControl('', [])
     });
   }
 }

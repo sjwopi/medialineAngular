@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service, RecaptchaModule, RecaptchaV3Module } from "ng-recaptcha";
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FeedbackService } from './services/feedback.service';
 import { LoadingComponent } from './ui/components/loading/loading.component';
 import { AdminPanelCategoriesComponent } from './ui/widgets/admin-panel-categories/admin-panel-categories.component';
+import { ModalResponseComponent } from './ui/components/modal-response/modal-response.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { AdminPanelCategoriesComponent } from './ui/widgets/admin-panel-categori
     AdminPanelNewsComponent,
     AdminPanelProductComponent,
     LoadingComponent,
-    AdminPanelCategoriesComponent
+    AdminPanelCategoriesComponent,
+    ModalResponseComponent
   ],
   imports: [
     BrowserModule,
@@ -69,11 +72,15 @@ import { AdminPanelCategoriesComponent } from './ui/widgets/admin-panel-categori
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FileUploadModule
+    FileUploadModule,
+    RecaptchaV3Module,
+    RecaptchaModule
   ],
   providers: [
     NewsService,
-    FeedbackService
+    FeedbackService,
+    ReCaptchaV3Service,
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue: "6Lc6HoApAAAAAKdxYu-Dsk2e0pDXUAVa83BuAXky" }
   ],
   bootstrap: [AppComponent]
 })

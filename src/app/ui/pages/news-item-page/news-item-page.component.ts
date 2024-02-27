@@ -23,11 +23,13 @@ export class NewsItemPageComponent {
     imagePath: ""
   }
   panelTypes = IPanelTypes;
+  isComplete: boolean = false;
 
 
   ngOnInit(): void {
     this.newsService.getById(this.id).pipe().subscribe(item => {
       this.news = item;
+      this.isComplete = true
     })
   }
 }

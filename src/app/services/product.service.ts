@@ -14,14 +14,16 @@ export class ProductService {
   constructor(private http: HttpClient, private authService: AuthService,
     private router: Router) { }
 
-  baseUrl: string =  BASE_URL;
+  baseUrl: string = BASE_URL;
   jwt: string = this.authService.getToken() ?? '';
   products: IProduct[] = [
     {
       title: "",
       description: "",
       imagePath: "",
-      category: "",
+      category: {
+        name: ""
+      }
     }
   ]
   getAll(): Observable<IProduct[]> {
@@ -48,16 +50,17 @@ export class ProductService {
       tap()
     )
   }
-  create(item: any, file: any) {
+
+  create(item: any, file: any, categoryId: string | undefined, subcategoryId?: string | undefined) {
     const headers = new HttpHeaders({
       'Authorization': this.jwt,
-      
+
     })
+    console.log(subcategoryId)
 
     let formData = new FormData();
-    Object.keys(item).forEach((key: string)=> {
-      console.log(key)
-      console.log(item[key])
+    Object.keys(item).forEach((key: string) => {
+      if(key !== 'categoryId' && key !== 'subcategoryId')
       formData.append(
         key,
         /* @ts-ignore */
@@ -68,6 +71,18 @@ export class ProductService {
       "image",
       file
     );
+    if (categoryId) {
+      formData.append(
+        "categoryId",
+        categoryId
+      );
+    }
+    if (subcategoryId) {
+      formData.append(
+        "subcategoryId",
+        subcategoryId
+      );
+    }
 
     return this.http.post<IProduct>(`${this.baseUrl}/admin/products`, formData, { headers }).pipe(
       delay(200),
@@ -75,6 +90,7 @@ export class ProductService {
       tap()
     )
   }
+
   delete(id: number) {
     const headers = new HttpHeaders({
       'Authorization': this.jwt

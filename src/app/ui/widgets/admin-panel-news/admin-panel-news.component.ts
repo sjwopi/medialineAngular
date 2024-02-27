@@ -37,6 +37,12 @@ export class AdminPanelNewsComponent implements OnInit {
   file?: File;
   messageErrorDate?: string;
 
+  isLoad: boolean = false;
+  isOpenAfterSubmit: boolean = false;
+  isComplete: boolean = false;
+  messageAfterSubmit?: string;
+  messageBtnAfterSubmit?: string;
+
   changeVisibility() {
     this.isOpen = !this.isOpen;
   }
@@ -63,23 +69,75 @@ export class AdminPanelNewsComponent implements OnInit {
     this.file = e.target.files[0];
   }
 
+  changeVisibilityAfterSubmit() {
+    if (!this.isLoad) {
+      document.body.classList.toggle('open')
+      this.isOpenAfterSubmit = !this.isOpenAfterSubmit;
+    }
+  }
+
   submitCreate() {
     if (!this.adminForm.invalid) {
+      this.changeVisibilityAfterSubmit();
+      this.isLoad = true;
+
       this.newsService.create(this.adminForm.value, this.file!).subscribe(item => {
         this.newsService.news.unshift(item)
         this.changeVisibility();
         this.adminForm.reset();
+        this.isComplete = true
+        this.messageAfterSubmit = 'Успешно!';
+        this.messageBtnAfterSubmit = 'Продолжить';
+        this.isLoad = false;
+      }, (error) => {
+        this.isComplete = false
+        this.messageBtnAfterSubmit = 'Попробовать еще раз';
+        switch (error.status) {
+          case 403:
+            this.messageAfterSubmit = 'У вас нет доступа!';
+            break;
+          case 500:
+            this.messageAfterSubmit = 'Ошибка сервера!';
+            break;
+          default:
+            this.messageAfterSubmit = 'Что-то пошло не так!';
+        }
+        this.isLoad = false;
       });
     }
   }
   submitEdit() {
-    this.news.title = this.adminForm.controls['title'].value;
-    this.news.time = this.adminForm.controls['time'].value;
-    this.news.text = this.adminForm.controls['text'].value;
-    this.newsService.edit(this.news, this.file ?? undefined).subscribe(item => {
-      this.news = item;
-    });
-    this.changeVisibility();
+    if (this.adminForm.invalid) {
+      this.changeVisibilityAfterSubmit();
+      this.isLoad = true;
+
+      this.news.title = this.adminForm.controls['title'].value;
+      this.news.time = this.adminForm.controls['time'].value;
+      this.news.text = this.adminForm.controls['text'].value;
+      this.newsService.edit(this.news, this.file ?? undefined).subscribe(item => {
+        this.news = item;
+        this.changeVisibility();
+        this.adminForm.reset();
+        this.isComplete = true
+        this.messageAfterSubmit = 'Успешно!';
+        this.messageBtnAfterSubmit = 'Продолжить';
+        this.isLoad = false;
+      }, (error) => {
+        this.isComplete = false
+        this.messageBtnAfterSubmit = 'Попробовать еще раз';
+        switch (error.status) {
+          case 403:
+            this.messageAfterSubmit = 'У вас нет доступа!';
+            break;
+          case 500:
+            this.messageAfterSubmit = 'Ошибка сервера!';
+            break;
+          default:
+            this.messageAfterSubmit = 'Что-то пошло не так!';
+        }
+        this.isLoad = false;
+      });
+    }
   }
 
   delete() {
@@ -97,5 +155,11 @@ export class AdminPanelNewsComponent implements OnInit {
       image: new FormControl("", [Validators.required]),
       imageEdit: new FormControl("", []),
     })
+
+    if (this.typePanel == this.allTypesPanel.ItemEdit) {
+      this.adminForm.controls["title"].setValue(this.news.title)
+      this.adminForm.controls["time"].setValue(this.news.time)
+      this.adminForm.controls["text"].setValue(this.news.text)
+    }
   }
 }

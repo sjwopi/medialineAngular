@@ -6,10 +6,10 @@
   <div class="catalogPage__sidebar">
     
     <div class="catalogPage__sidebar-container" *ngFor="let cat of categor">
-      <button class="catalogPage__sidebar-item" *ngIf="!cat.subcategories" (click)="changeSort($event, cat.id!.toString())">{{cat.name}}</button>
+      <button class="catalogPage__sidebar-item" *ngIf="!cat.subcategories" (click)="changeSort($event, cat)">{{cat.name}}</button>
 
-      <button class="catalogPage__sidebar-item" *ngIf="cat.subcategories" (click)="openSubCat($event, cat.id!.toString())">{{cat.name}}</button>
-      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.subcategories" (click)="changeSort($event, catSub.id!.toString())">{{catSub.name}}</button>
+      <button class="catalogPage__sidebar-item" *ngIf="cat.subcategories" (click)="openSubCat($event, cat)">{{cat.name}}</button>
+      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.subcategories" (click)="changeSort($event, catSub)">{{catSub.name}}</button>
     </div>
 
     <app-admin-panel-categories></app-admin-panel-categories>

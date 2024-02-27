@@ -23,32 +23,44 @@
         </div>
       </div> -->
 
-      <textarea placeholder="Содержание" class="adminPanel__input adminPanel__input_textarea"
-        formControlName="description"></textarea>
-      <div class="adminPanel__err" *ngIf="adminForm.get('description')?.invalid">
-        <span *ngIf="adminForm.get('description')?.['errors']?.['required']">Это поле не может быть пустым.</span>
-        <span *ngIf="adminForm.get('description')?.['errors']?.['minlength']">Введите минимум 2 символа.</span>
+      <div>
+        <p>Содержание</p>
+        <textarea placeholder="Содержание" class="adminPanel__input adminPanel__input_textarea"
+          formControlName="description"></textarea>
+        <div class="adminPanel__err" *ngIf="adminForm.get('description')?.invalid">
+          <span *ngIf="adminForm.get('description')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+          <span *ngIf="adminForm.get('description')?.['errors']?.['minlength']">Введите минимум 2 символа.</span>
+        </div>
       </div>
 
-      <textarea placeholder="Комплектация" class="adminPanel__input adminPanel__input_textarea"
-        formControlName="packaging"></textarea>
-      <div class="adminPanel__err" *ngIf="adminForm.get('packaging')?.invalid">
-        <span *ngIf="adminForm.get('packaging')?.['errors']?.['minlength']">Введите минимум 2 символа.</span>
+      <div>
+        <p>Комплектация</p>
+        <textarea placeholder="Комплектация" class="adminPanel__input adminPanel__input_textarea"
+          formControlName="packaging"></textarea>
+        <div class="adminPanel__err" *ngIf="adminForm.get('packaging')?.invalid">
+          <span *ngIf="adminForm.get('packaging')?.['errors']?.['minlength']">Введите минимум 2 символа.</span>
+        </div>
       </div>
 
+      <div>
+        <p>Особенности</p>
       <textarea placeholder="Особенности" class="adminPanel__input adminPanel__input_textarea"
         formControlName="specials"></textarea>
       <div class="adminPanel__err" *ngIf="adminForm.get('specials')?.invalid">
         <span *ngIf="adminForm.get('specials')?.['errors']?.['minlength']">Введите минимум 2 символа.</span>
       </div>
+    </div>
 
       <div>
         <p>Категория</p>
         <select class="adminPanel__input adminPanel__input_select" formControlName="categoryId">
-          <option *ngFor="let cat of categories" [ngValue]="cat.name">
+          <option *ngFor="let cat of categoriesAll" [ngValue]="cat.name">
             {{ cat.name }}
           </option>
         </select>
+        <div class="adminPanel__err" *ngIf="adminForm.get('categoryId')?.invalid">
+          <span *ngIf="adminForm.get('categoryId')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+        </div>
       </div>
 
       <div *ngIf="this.typePanel == allTypesPanel.ItemCreate">
@@ -57,6 +69,11 @@
         <div class="adminPanel__err" *ngIf="adminForm.get('image')?.invalid">
           <span *ngIf="adminForm.get('image')?.['errors']?.['required']">Это поле не может быть пустым.</span>
         </div>
+      </div>
+
+      <div *ngIf="this.typePanel == allTypesPanel.ItemEdit">
+        <p>Изменить изображение <u><i>(необязательно)</i></u></p>
+        <input type="file" class="adminPanel__input" formControlName="imageEdit" (change)="changeFile($event)" />
       </div>
 
       <div class="adminPanel__btns">

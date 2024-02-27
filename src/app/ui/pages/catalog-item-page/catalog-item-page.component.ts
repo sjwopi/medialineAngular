@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IPanelTypes } from 'src/app/models/adminPanel.model';
 import { IProduct } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -14,8 +15,12 @@ export class CatalogItemPageComponent {
     title: "",
     description: "",
     imagePath: "",
-    category: ""
+    category: {
+      name: ""
+    }
   }
+  allPanelTypes = IPanelTypes;
+  isComplete: boolean = false;
 
   constructor(private activateRoute: ActivatedRoute, public productsService: ProductService) {
     this.id = activateRoute.snapshot.params["id"];
@@ -24,28 +29,9 @@ export class CatalogItemPageComponent {
 
 
   ngOnInit(): void {
-    /* this.productsService.getById(this.id).pipe().subscribe(item => {
+    this.productsService.getById(this.id).pipe().subscribe(item => {
       this.product = item;
-    }) */
-    this.product = {
-      id: 1,
-      title: "Продукт1",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.      ",
-      imagePath: "/assets/img/zaglushka.png",
-      category: "тип продукта 1",
-      peculiarities: [
-        "hfadsf",
-        "asdf sdfasdfasg adfasf",
-        "asdfasdfasfg asdfasd",
-        "asdfasdf"
-      ],
-      equipment: [
-        "hfadsf",
-        "asdfasdf",
-        "asdf sdfasdfasg adfasf",
-        "asdfasdfasfg asdfasd",
-        "asdfasdfasfg asdfasd",
-      ]
-    }
+      this.isComplete = true
+    })
   }
 }

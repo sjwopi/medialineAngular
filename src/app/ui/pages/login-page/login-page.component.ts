@@ -17,44 +17,45 @@ export class LoginPageComponent implements OnInit {
   loginForm!: FormGroup;
   messageErr: string = "";
   isLoad: boolean = false;
-  isOpenComplete: boolean = false;
+  isOpenAfterSubmit: boolean = false;
   isComplete: boolean = false;
-  messageAfterLogin?: string;
-  messageBtnAfterLogin?: string;
+  messageAfterSubmit?: string;
+  messageBtnAfterSubmit?: string;
 
-  changeVisibilityComplete() {
-    document.body.classList.toggle('open')
-    this.isOpenComplete = !this.isOpenComplete;
+  changeVisibilityAfterSubmit() {
+    if(!this.isLoad) {
+      document.body.classList.toggle('open')
+      this.isOpenAfterSubmit = !this.isOpenAfterSubmit;
+    }
   }
 
   submitLogin() {
     if (!this.loginForm.invalid) {
+      this.changeVisibilityAfterSubmit();
       this.isLoad = true;
-      this.changeVisibilityComplete();
 
       this.authService.login(this.loginForm.value).subscribe(item => {
         this.isComplete = true
-        this.messageAfterLogin = 'Успешно!';
-        this.messageBtnAfterLogin = 'Продолжить';
+        this.messageAfterSubmit = 'Успешно!';
+        this.messageBtnAfterSubmit = 'Продолжить';
         this.isLoad = false;
       }, (error) => {
         this.isComplete = false
-        this.messageBtnAfterLogin = 'Попробовать еще раз';
+        this.messageBtnAfterSubmit = 'Попробовать еще раз';
         switch (error.status) {
           case 403:
-            this.messageAfterLogin = 'Неверный логин или пароль!';
+            this.messageAfterSubmit = 'Неверный логин или пароль!';
             break;
           case 500:
-            this.messageAfterLogin = 'Ошибка сервера!';
+            this.messageAfterSubmit = 'Ошибка сервера!';
             break;
           default:
-            this.messageAfterLogin = 'Что-то пошло не так!';
+            this.messageAfterSubmit = 'Что-то пошло не так!';
         }
         this.isLoad = false;
       });
     }
   }
-
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{3,}@[A-Za-z0-9]{2,}\.[A-Za-z0-9]{2,}')]),

@@ -26,17 +26,24 @@
 </section>
 
 
-<div *ngIf="isOpenComplete" class="login__modal-overlay" (click)="changeVisibilityComplete()">
-  <app-loading *ngIf="isOpenComplete && isLoad" ngClass="white"></app-loading>
+<div *ngIf="isOpenAfterSubmit" class="modalRes__modal-overlay"  (click)="changeVisibilityAfterSubmit()">
+  <app-loading *ngIf="isOpenAfterSubmit && isLoad" ngClass="white"></app-loading>
 </div>
 
+<div *ngIf="isOpenAfterSubmit && !isLoad" class="modalRes__modal-container">
+  <h2 class="modalRes__title">{{messageAfterSubmit}}</h2>
 
-<div *ngIf="isOpenComplete && !isLoad" class="login__modal-container">
-  <h2 class="login__title">{{messageAfterLogin}}</h2>
+  <div class="modalRes__checkmark" [ngClass]="{'complete': this.isComplete}"></div>
 
-  <div class="login__checkmark" [ngClass]="{'complete': this.isComplete}"></div>
-
-  <div class="login__btns">
-    <button class="login__btn" (click)="changeVisibilityComplete()">{{messageBtnAfterLogin}}</button>
+  <div class="modalRes__btns">
+    <button class="modalRes__btn" (click)="changeVisibilityAfterSubmit()">{{messageBtnAfterSubmit}}</button>
   </div>
 </div>
+
+<!-- <app-modal-response 
+  [isOpenAfterSubmit]="isOpenAfterSubmit"
+  [isLoad]="isLoad"
+  [isComplete]="isComplete"
+  messageAfterSubmit="{{messageAfterLogin}}"
+  messageBtnAfterSubmit="{{messageBtnAfterLogin}}"
+  ></app-modal-response> -->

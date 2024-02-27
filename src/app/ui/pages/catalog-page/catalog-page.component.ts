@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IPanelTypes } from 'src/app/models/adminPanel.model';
-import { ICategory } from 'src/app/models/categories.model';
+import { ICategory, ISubCategory } from 'src/app/models/categories.model';
 import { IProduct } from 'src/app/models/product.model';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -16,20 +16,20 @@ export class CatalogPageComponent {
     public categoriesService: CategoriesService
   ) { }
   products?: IProduct[];
-  sortByType: string = "1";
-  allTypesProduct: string[] = []
   categor: ICategory[] = this.categoriesService.categories
+  sortByType: ICategory | ISubCategory = this.categor[0];
+  allTypesProduct: string[] = []
   sidebarHTML: Element | null | undefined;
   allPanelTypes = IPanelTypes;
   isLoad: boolean = true;
 
-  changeSort(e: any, category: string) {
+  changeSort(e: any, category: ICategory | ISubCategory) {
     this.sidebarHTML!.querySelector('.active')?.classList.remove('active')
     e.target.classList.add('active')
     this.sortByType = category;
   }
 
-  openSubCat(e: any, category: string) {
+  openSubCat(e: any, category: ICategory | ISubCategory) {
     this.changeSort(e, category);
     e.target.parentElement.querySelectorAll('.child')?.forEach((item: any) => item.classList.toggle('show'))
   }
@@ -40,10 +40,12 @@ export class CatalogPageComponent {
     
     this.categoriesService.getCategory().subscribe(items => {
       this.categor = items;
+      this.sortByType = items[0];
 
       this.productService.getAll().pipe().subscribe(items => {
         this.products = items.reverse();
         this.isLoad = false;
+        this.sidebarHTML?.querySelector('.catalogPage__sidebar-item')?.classList.add('active')
       })
     })
   }

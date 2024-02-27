@@ -13,7 +13,16 @@ export class FeedbackService {
   baseUrl: string = BASE_URL;
 
   createFeedback(feedback: IFeedback): Observable<IFeedback> {
-    return this.http.post<IFeedback>(`${this.baseUrl}/feedback`, feedback).pipe(
+    let formData = new FormData();
+    Object.keys(feedback).forEach((key: string) => {
+      formData.append(
+        key,
+        /* @ts-ignore */
+        feedback[key]
+      );
+    })
+
+    return this.http.post<IFeedback>(`${this.baseUrl}/feedback`, formData).pipe(
       delay(200),
       retry(2),
       tap()

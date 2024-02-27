@@ -6,7 +6,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { IProduct } from 'src/app/models/product.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CategoriesService } from 'src/app/services/categories.service';
-import { ICategory } from 'src/app/models/categories.model';
+import { ICategory, ISubCategory } from 'src/app/models/categories.model';
 
 @Component({
   selector: 'app-admin-panel-product',
@@ -20,7 +20,9 @@ export class AdminPanelProductComponent implements OnInit {
     title: "",
     description: "",
     imagePath: "",
-    category: ""
+    category: {
+      name: ""
+    }
   }
 
   constructor(
@@ -37,6 +39,7 @@ export class AdminPanelProductComponent implements OnInit {
   adminForm!: FormGroup;
   file?: File;
   categories: ICategory[] = []
+  categoriesAll: ICategory[] = []
 
   changeVisibility() {
     this.isOpen = !this.isOpen;
@@ -50,16 +53,24 @@ export class AdminPanelProductComponent implements OnInit {
 
   submitCreate() {
     if (!this.adminForm.invalid) {
-      const catId = this.categories.find(cat => cat.name === this.adminForm.controls['categoryId'].value)?.id
-      if (catId) {
-        this.adminForm.controls['categoryId'].setValue(catId);
+      const cat = this.categories.find(cat => cat.name === this.adminForm.controls['categoryId'].value)
+      console.log(cat)
+      if (cat?.subcategories) {
+        this.productService.create(this.adminForm.value, this.file, cat.id?.toString()).subscribe(item => {
+          this.productService.products.push(item)
+          this.changeVisibility();
+          this.adminForm.reset();
+        });
+      } else {
+        this.productService.create(this.adminForm.value, this.file, cat?.categoryId?.toString(), cat?.id?.toString(),).subscribe(item => {
+          console.log(item)
+          this.productService.products.push(item)
+          this.changeVisibility();
+          this.adminForm.reset();
+        });
       }
 
-      this.productService.create(this.adminForm.value, this.file).subscribe(item => {
-        this.productService.products.push(item)
-        this.changeVisibility();
-        this.adminForm.reset();
-      });
+
     }
   }
   submitEdit() {
@@ -82,22 +93,31 @@ export class AdminPanelProductComponent implements OnInit {
   ngOnInit(): void {
     this.adminForm = new FormGroup({
       title: new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(60)]),
-      /* time: new FormControl("", [Validators.required, Validators.pattern('[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]')]), */
       description: new FormControl("", [Validators.required, Validators.minLength(2)]),
       packaging: new FormControl("", [Validators.minLength(2)]),
       specials: new FormControl("", [Validators.minLength(2)]),
       categoryId: new FormControl("", [Validators.required]),
       image: new FormControl("", [Validators.required]),
-      imagePath: new FormControl("", []),
+      imageEdit: new FormControl("", []),
     })
 
-    this.categoriesService.getCategory().subscribe(items => this.categories = items)
+    this.categoriesService.getCategory().subscribe(items => {
+      this.categories = items
+      this.categoriesAll = items;
+      items.forEach(item => {
+        item.subcategories?.forEach(subCat => {
+          this.categoriesAll.push(subCat)
+        })
+      })
+    })
 
-    /*   if (this.isLogin && this.typePanel == this.allTypesPanel.ItemEdit) {
-        this.adminForm.controls["title"].setValue(this.product.title)
-              this.adminForm.controls["time"].setValue(this.product.time)
-              this.adminForm.controls["text"].setValue(this.product.text)
-        this.adminForm.controls["imagePath"].setValue(this.product.imagePath)
-      } */
+    if (this.typePanel == this.allTypesPanel.ItemEdit) {
+      this.adminForm.controls["title"].setValue(this.product.title)
+      this.adminForm.controls["description"].setValue(this.product.description)
+      this.adminForm.controls["packaging"].setValue(this.product.packaging)
+      this.adminForm.controls["specials"].setValue(this.product.specials)
+      const categoryProduct = this.product.subcategory ? this.product.subcategory.name : this.product.category.name
+      this.adminForm.controls["categoryId"].setValue(categoryProduct)
+    }
   }
 }

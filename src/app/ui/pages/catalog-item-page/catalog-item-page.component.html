@@ -1,21 +1,30 @@
+<section class="content" *ngIf="isComplete">
+  <app-admin-panel-product 
+    title="Редактирование товара" 
+    [typePanel]="allPanelTypes.ItemEdit"
+    [product]="this.product">
+  </app-admin-panel-product>
+</section>
+
 <div class="catalogItem content">
 
   <h1 class="catalogItem__title title">{{product.title}}</h1>
 
   <div class="catalogItem__container">
-    <img class="catalogItem__img" src="{{product.imagePath}}" alt="{{product.title}}">
+    <img *ngIf="product.imagePath" class="catalogItem__img" src="http://localhost:8080/image/{{product.imagePath}}" alt="{{product.title}}">
+    <img *ngIf="!product.imagePath" class="catalogItem__img" src="assets/img/zaglushka.png" alt="{{product.title}}">
 
-    <h2 class="catalogItem__subtitle">Особенности</h2>
-    <ul class="catalogItem__list" *ngIf="product.peculiarities">
-      <li class="catalogItem__listItem text" *ngFor="let peculiarity of product.peculiarities">
-        {{peculiarity}}
+    <h2 class="catalogItem__subtitle" *ngIf="product.specials">Особенности</h2>
+    <ul class="catalogItem__list" *ngIf="product.specials">
+      <li class="catalogItem__listItem text" *ngFor="let specials of product.specials.split('\n')">
+        {{specials}}
       </li>
     </ul>
 
-    <h2 class="catalogItem__subtitle">Комплектация</h2>
-    <ul class="catalogItem__list" *ngIf="product.equipment">
-      <li class="catalogItem__listItem text" *ngFor="let equipment of product.equipment">
-        {{equipment}}
+    <h2 class="catalogItem__subtitle" *ngIf="product.packaging">Комплектация</h2>
+    <ul class="catalogItem__list" *ngIf="product.packaging">
+      <li class="catalogItem__listItem text" *ngFor="let packaging of product.packaging.split('\n')">
+        {{packaging}}
       </li>
     </ul>
 

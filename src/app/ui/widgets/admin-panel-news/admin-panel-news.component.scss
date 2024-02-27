@@ -119,6 +119,107 @@
     gap: 30px;
   }
 }
+.modalRes {
+  &__btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  &__btn {
+    padding: 12px 60px;
+    background-color: #4979d2;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+
+    &_back {
+      background-color: #aaa;
+    }
+  }
+  
+  &__modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000055;
+  }
+
+  &__modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  &__checkmark {
+    width: 4vw;
+    height: 4vw;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 5px solid #fb2424;
+    position: relative;
+
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 13%;
+      left: 33%;
+      width: 1vw;
+      height: 1vw;
+      border-right: 5px solid #fb2424;
+      border-bottom: 5px solid #fb2424;
+      transform: rotate(45deg);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 53%;
+      left: 33%;
+      width: 1vw;
+      height: 1vw;
+      border-right: 5px solid #fb2424;
+      border-bottom: 5px solid #fb2424;
+      transform: rotate(-135deg);
+    }
+
+    &.complete {
+      border-color: #00ff00;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 13%;
+        left: 33%;
+        width: 1vw;
+        height: 2vw;
+        border-right: 5px solid #00ff00;
+        border-bottom: 5px solid #00ff00;
+        transform: rotate(45deg);
+      }
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
 
 @media screen and (max-width: 600px) {
   .adminPanel {

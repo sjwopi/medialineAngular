@@ -85,7 +85,7 @@ export class NewsService {
     );
 
     return this.http.post<INewsItem>(`http://localhost:8080/api/admin/news`, formData, { headers }).pipe(
-      delay(200),
+      delay(1304),
       retry(2),
       tap()
     )

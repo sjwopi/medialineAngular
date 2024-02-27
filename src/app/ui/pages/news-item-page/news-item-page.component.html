@@ -2,9 +2,9 @@
   <a routerLink="/" class="newspage__title newspage__title_err">Такой новости не существует. Вернитесь на гланую.</a>
 </section> -->
 
-<section *ngIf="this.news.title != ''" class="newspage content">
+<section class="newspage content" *ngIf="isComplete">
   
-  <app-admin-panel-news *ngIf="this.news.title !== ''"
+  <app-admin-panel-news
     title="Редактирование новости"
     [typePanel]="panelTypes.ItemEdit"
     [news]="this.news"
