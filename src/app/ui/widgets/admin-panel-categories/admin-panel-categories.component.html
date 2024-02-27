@@ -59,7 +59,7 @@
         </div>
 
 
-        <div class="adminPanel__content">
+        <div class="adminPanel__content" *ngIf="isEditWithParent">
           <p>Категория "Родитель"</p>
           <select class="adminPanel__input adminPanel__input_select" formControlName="parentcategory">
             <option *ngFor="let cat of categories" [ngValue]="cat.name">

@@ -62,7 +62,7 @@ export class CategoriesService {
     )
   }
 
-  createSubCategory(item: ISubCategory): Observable<ISubCategory> {
+  createSubCategory(item: any): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders({
       'Authorization': this.jwt
     })
@@ -75,6 +75,24 @@ export class CategoriesService {
       );
     })
     return this.http.post<any>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
+      delay(304),
+      retry(2)
+    )
+  }
+
+  editSubCategory(item: any): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders({
+      'Authorization': this.jwt
+    })
+    let formData = new FormData();
+    Object.keys(item).forEach((key: string)=> {
+      formData.append(
+        key,
+        /* @ts-ignore */
+        item[key]
+      );
+    })
+    return this.http.patch<any>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
       delay(304),
       retry(2)
     )

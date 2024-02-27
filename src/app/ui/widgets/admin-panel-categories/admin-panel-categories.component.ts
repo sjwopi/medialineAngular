@@ -21,9 +21,11 @@ export class AdminPanelCategoriesComponent implements OnInit {
   isOpen: boolean = false;
   isOpenDelete: boolean = false;
   categories: ICategory[] = this.categoriesService.categories;
+  categoriesSub: ISubCategory[] = [];
   categoriesAll: ICategory[] = [];
   adminFormCreate!: FormGroup;
   adminFormEdit!: FormGroup;
+  isEditWithParent: boolean = false;
 
   changeVisibility() {
     this.isOpen = !this.isOpen;
@@ -34,9 +36,12 @@ export class AdminPanelCategoriesComponent implements OnInit {
   changeEditCategory() {
     const nameEdit = this.adminFormEdit.controls['editcategory'].value
     this.adminFormEdit.controls['category'].setValue(nameEdit)
-    const parentId = this.categories.find(category => category.name === nameEdit)?.categoryId
+    const cat = this.categoriesAll.find(category => category.name == nameEdit)
+    const parentId = this.categories.find(category => category.id == cat?.categoryId)?.id
+    this.isEditWithParent = false;
 
     if (parentId) {
+      this.isEditWithParent = true;
       const parentName = this.categories.find(category => category.id == parentId)
       this.adminFormEdit.controls['parentcategory'].setValue(parentName!.name);
     }
@@ -88,19 +93,20 @@ export class AdminPanelCategoriesComponent implements OnInit {
     }
 
     if (!this.adminFormEdit.invalid) {
-      if (nameParent == this.categories[0].name || !nameParent) {
-        const newParent = this.adminFormEdit.controls['parentcategory'].value
-        const newParentId = this.categories.find(category => {
-          return category.name == newParent
-        })?.id
-
-        const nameId = this.categoriesAll.find(category => category.name == name)?.id
-        const item: ICategory = { id: nameId, name: name, categoryId: newParentId }
-        console.log(item)
-        this.categoriesService.editCategory(item).subscribe(item => {
-        })
+      if (!nameParent) {
+        const nameEdit = this.adminFormEdit.controls['editcategory'].value
+        const nameId = this.categories.find(category => category.name == nameEdit)?.id
+        const item: ICategory = { id: nameId, name: name }
+        this.categoriesService.editCategory(item).subscribe()
       } else {
-
+        const nameEdit = this.adminFormEdit.controls['editcategory'].value
+        const nameId = this.categoriesSub.find(category => category.name == nameEdit)?.id
+        const parentId = this.categories.find(category => category.name == nameParent)?.id
+        console.log(parentId)
+        if (parentId) {
+          const item: any = { id: nameId, name: name, categoryId: parentId}
+          this.categoriesService.editSubCategory(item).subscribe()
+        }
       }
     }
   }
@@ -113,9 +119,9 @@ export class AdminPanelCategoriesComponent implements OnInit {
       items.forEach(item => {
         item.subcategories?.forEach(subCat => {
           this.categoriesAll.push(subCat)
+          this.categoriesSub.push(subCat)
         })
       })
-      console.log(this.categoriesAll)
     })
 
 
