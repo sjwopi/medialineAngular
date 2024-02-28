@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IPanelTypes } from 'src/app/models/adminPanel.model';
 import { ICategory, ISubCategory } from 'src/app/models/categories.model';
 import { IProduct } from 'src/app/models/product.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -12,12 +13,15 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class CatalogPageComponent {
   constructor(
+    public authService: AuthService,
     public productService: ProductService,
     public categoriesService: CategoriesService
   ) { }
   products?: IProduct[];
   categor: ICategory[] = this.categoriesService.categories
+  isLogin: boolean = this.authService.isLogin();
   sortByType: ICategory | ISubCategory = this.categor[0];
+  isAdminType: ICategory =  this.categor[0];
   allTypesProduct: string[] = []
   sidebarHTML: Element | null | undefined;
   allPanelTypes = IPanelTypes;
@@ -41,10 +45,10 @@ export class CatalogPageComponent {
     this.categoriesService.getCategory().subscribe(items => {
       this.categor = items;
       this.sortByType = items[0];
+      this.isAdminType = items[0];
 
       this.productService.getAll().pipe().subscribe(items => {
         this.products = items.reverse();
-        console.log(this.products[1])
         this.isLoad = false;
         this.sidebarHTML?.querySelector('.catalogPage__sidebar-item')?.classList.add('active')
       })

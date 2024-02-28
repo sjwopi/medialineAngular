@@ -4,16 +4,18 @@
 
 <section class="content catalogPage">
   <div class="catalogPage__sidebar">
-    
-    <div class="catalogPage__sidebar-container" *ngFor="let cat of categor">
-      <button class="catalogPage__sidebar-item" *ngIf="!cat.subcategories" (click)="changeSort($event, cat)">{{cat.name}}</button>
 
-      <button class="catalogPage__sidebar-item" *ngIf="cat.subcategories" (click)="openSubCat($event, cat)">{{cat.name}}</button>
-      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.subcategories" (click)="changeSort($event, catSub)">{{catSub.name}}</button>
+    <div class="catalogPage__sidebar-container" *ngFor="let cat of categor">
+      <button class="catalogPage__sidebar-item" *ngIf="!cat.subcategories"
+        (click)="changeSort($event, cat)">{{cat.name}}</button>
+
+      <button class="catalogPage__sidebar-item" *ngIf="cat.subcategories"
+        (click)="openSubCat($event, cat)">{{cat.name}}</button>
+      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.subcategories"
+        (click)="changeSort($event, catSub)">{{catSub.name}}</button>
     </div>
 
     <app-admin-panel-categories></app-admin-panel-categories>
-
   </div>
 
   <div class="catalogPage__list">
@@ -21,5 +23,13 @@
     <app-product-card *ngFor="let product of this.products! | filterProduct:sortByType"
       [product]="product"></app-product-card>
   </div>
+</section>
 
+<section class="content catalogPage err" *ngIf="isLogin">
+  <div class="catalogPage__list">
+    <app-loading *ngIf="isLoad"></app-loading>
+    <div class="catalogPage__list-item" *ngFor="let product of this.products! | filterProduct:isAdminType:isLogin">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  </div>
 </section>

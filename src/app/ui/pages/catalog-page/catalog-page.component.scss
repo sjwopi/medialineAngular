@@ -3,6 +3,30 @@
   flex-direction: row;
   gap: 40px;
 
+  &.err {
+    .catalogPage__list {
+      grid-template-columns: repeat(5, 1fr);
+      margin-top: 150px;
+    }
+    .catalogPage__list-item {
+      position: relative;
+      &::before {
+        content: "Нет категории";
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #a729294e;
+        text-align: center;
+        color: white;
+        padding: 8% 0;
+        z-index: 2;
+        width: 100%;
+        font-size: 30px;
+        font-weight: 900;
+      }
+    }
+  }
+
   &__sidebar {
     display: flex;
     flex-direction: column;
@@ -46,6 +70,7 @@
       display: none;
       padding: 12px 20px 12px 70px;
       font-size: 15px;
+
       &.show {
         display: block;
       }
@@ -63,7 +88,7 @@
     gap: 40px;
     grid-template-columns: repeat(3, 1fr);
     margin-bottom: 50px;
-    min-height: 35vh;
+    //min-height: 35vh;
     position: relative;
   }
 }
