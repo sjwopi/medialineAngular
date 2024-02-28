@@ -1,4 +1,4 @@
-<section class="login">
+<section class="login" *ngIf="!isLogin">
   <h2 class="login__title">Вход</h2>
   <form class="login__form" [formGroup]="loginForm">
 
@@ -23,6 +23,13 @@
     </div>
 
   </form>
+</section>
+
+<section class="login logOut" *ngIf="isLogin">
+  <h2 class="login__title">Выход</h2>
+  <div class="login__btns">
+    <button type="submit" class="login__btn" (click)="logOut()">Выйти</button>
+  </div>
 </section>
 
 <app-modal-response [isBack]="true"></app-modal-response>

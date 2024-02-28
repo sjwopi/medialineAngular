@@ -21,11 +21,11 @@ export class AuthService {
   }
 
   getToken() {
-    return JSON.parse(localStorage.getItem('IsAuthToken') ?? '');
+    return JSON.parse(localStorage.getItem('IsAuthToken')!);
   }
   
   isLogin() {
-    if (parseInt(JSON.parse(localStorage.getItem('Time') ?? '')) >= +new Date() && JSON.parse(localStorage.getItem('IsAuthToken') ?? '') != '') {
+    if (parseInt(JSON.parse(localStorage.getItem('Time')!)) >= +new Date() && JSON.parse(localStorage.getItem('IsAuthToken') ?? '') != '') {
       return true;
     }
     localStorage.clear;
@@ -34,6 +34,10 @@ export class AuthService {
 
   delToken() {
     localStorage.removeItem('IsAuthToken');
+  }
+
+  logOut() {
+    localStorage.clear();
   }
 
   login(userInfo: IUser): Observable<IUser> {

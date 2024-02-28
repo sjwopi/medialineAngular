@@ -21,7 +21,7 @@ export class CategoriesService {
   categoriesAll: (ICategory | ISubCategory)[] = [];
 
   getCategory(): Observable<ICategory[]> {
-    return this.http.get<any>(`${this.baseUrl}/category`).pipe(
+    return this.http.get<ICategory[]>(`${this.baseUrl}/category`).pipe(
       delay(304),
       retry(2),
       tap(items => {

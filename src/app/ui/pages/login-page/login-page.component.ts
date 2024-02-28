@@ -16,7 +16,12 @@ export class LoginPageComponent implements OnInit {
     public modalResponseService: ModalResponseService
   ) { }
   loginForm!: FormGroup;
+  isLogin: boolean = false;
 
+  logOut() {
+    this.authService.logOut();
+    window.location.reload()
+  }
   submitLogin() {
     if (!this.loginForm.invalid) {
       this.modalResponseService.isOpenAfterSubmit = true
@@ -24,6 +29,7 @@ export class LoginPageComponent implements OnInit {
 
       this.authService.login(this.loginForm.value).subscribe(item => {
         this.modalResponseService.setStatus(200);
+        this.isLogin = this.authService.isLogin();
       }, (error) => {
         this.modalResponseService.setStatus(error.status);
       });
@@ -35,5 +41,7 @@ export class LoginPageComponent implements OnInit {
       'email': new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{3,}@[A-Za-z0-9]{2,}\.[A-Za-z0-9]{2,}')]),
       'password': new FormControl('', [Validators.required, Validators.minLength(8)])
     });
+
+    this.isLogin = this.authService.isLogin();
   }
 }
