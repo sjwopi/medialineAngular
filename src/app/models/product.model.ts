@@ -9,5 +9,6 @@ export interface IProduct {
   subcategory?: ISubCategory
   specials?: string
   packaging?: string
+  withoutCategory?: boolean;
 }
 

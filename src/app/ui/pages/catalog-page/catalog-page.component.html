@@ -21,15 +21,15 @@
   <div class="catalogPage__list">
     <app-loading *ngIf="isLoad"></app-loading>
     <app-product-card *ngFor="let product of this.products! | filterProduct:sortByType"
-      [product]="product"></app-product-card>
+      [product]="product" [ngClass]="{'without': isLogin && product.category.id == 1}"></app-product-card>
   </div>
 </section>
 
-<section class="content catalogPage err" *ngIf="isLogin">
+<!-- <section class="content catalogPage err" *ngIf="isLogin">
   <div class="catalogPage__list">
     <app-loading *ngIf="isLoad"></app-loading>
     <div class="catalogPage__list-item" *ngFor="let product of this.products! | filterProduct:isAdminType:isLogin">
       <app-product-card [product]="product"></app-product-card>
     </div>
   </div>
-</section>
+</section> -->

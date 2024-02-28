@@ -21,7 +21,6 @@ export class CatalogPageComponent {
   categor: ICategory[] = this.categoriesService.categories
   isLogin: boolean = this.authService.isLogin();
   sortByType: ICategory | ISubCategory = this.categor[0];
-  isAdminType: ICategory =  this.categor[0];
   allTypesProduct: string[] = []
   sidebarHTML: Element | null | undefined;
   allPanelTypes = IPanelTypes;
@@ -44,8 +43,15 @@ export class CatalogPageComponent {
     
     this.categoriesService.getCategory().subscribe(items => {
       this.categor = items;
+      if(this.isLogin) {
+        const catWithout: ICategory = {
+          id: 0,
+          name: "Без категории",
+          subcategories: []
+        }
+        this.categor.unshift(catWithout)
+      }
       this.sortByType = items[0];
-      this.isAdminType = items[0];
 
       this.productService.getAll().pipe().subscribe(items => {
         this.products = items.reverse();

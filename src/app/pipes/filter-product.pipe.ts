@@ -9,10 +9,10 @@ import { AuthService } from '../services/auth.service';
 export class FilterProductPipe implements PipeTransform {
   transform(products: IProduct[] | undefined, type: ICategory | ISubCategory, isLogin?: boolean): IProduct[] {
     if (products && type) {
-      if (type.name.toLowerCase() == 'все категории' && isLogin) {
+      if (type.id == 0) {
         return products.filter(p => p.category.id == 1)
       }
-      if (type.name.toLowerCase() == 'все категории') {
+      if (type.id == 1) {
         return products.slice(0, 12);
       }
       return products.filter(p => {
