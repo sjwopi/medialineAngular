@@ -69,29 +69,6 @@
   </div>
 </section>
 
-
-<div *ngIf="isOpenAfterSubmit" class="modalRes__modal-overlay">
-  <app-loading *ngIf="isOpenAfterSubmit && isLoad" ngClass="white"></app-loading>
-</div>
-<div *ngIf="isOpenAfterSubmit && !isLoad" class="modalRes__modal-container">
-  <h2 class="modalRes__title">{{messageAfterSubmit}}</h2>
-
-  <div class="modalRes__checkmark" [ngClass]="{'complete': this.isComplete}"></div>
-
-  <div class="modalRes__btns">
-    <button class="modalRes__btn" (click)="changeVisibilityAfterSubmit()">{{messageBtnAfterSubmit}}</button>
-  </div>
-</div>
-
-<!-- <app-modal-response 
-  [isOpenAfterSubmit]="isOpenAfterSubmit"
-  [isLoad]="isLoad"
-  [isComplete]="isComplete"
-  messageAfterSubmit="{{messageAfterSubmit}}"
-  messageBtnAfterSubmit="{{messageBtnAfterSubmit}}"
-  ></app-modal-response> -->
-
-
 <!-- модалка удаления -->
 <div *ngIf="this.isOpenDelete" class="adminPanel__modal-overlay" (click)="this.changeVisibilityDelete()"></div>
 <div *ngIf="this.isOpenDelete" class="adminPanel__modal-container">
@@ -102,3 +79,5 @@
     <button class="adminPanel__btn adminPanel__btn_delete" (click)="this.delete()">Удалить</button>
   </div>
 </div>
+
+<app-modal-response [isBack]="true"></app-modal-response>

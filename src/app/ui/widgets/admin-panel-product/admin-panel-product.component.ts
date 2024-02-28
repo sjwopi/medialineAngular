@@ -7,6 +7,7 @@ import { IProduct } from 'src/app/models/product.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { ICategory, ISubCategory } from 'src/app/models/categories.model';
+import { ModalResponseService } from 'src/app/services/modal-response.service';
 
 @Component({
   selector: 'app-admin-panel-product',
@@ -21,7 +22,8 @@ export class AdminPanelProductComponent implements OnInit {
     description: "",
     imagePath: "",
     category: {
-      name: ""
+      name: "",
+      subcategories: []
     }
   }
 
@@ -29,7 +31,8 @@ export class AdminPanelProductComponent implements OnInit {
     private router: Router,
     public productService: ProductService,
     public authService: AuthService,
-    public categoriesService: CategoriesService
+    public categoriesService: CategoriesService,
+    public modalResponseService: ModalResponseService
   ) { }
 
   allTypesPanel = IPanelTypes;
@@ -38,8 +41,6 @@ export class AdminPanelProductComponent implements OnInit {
   isOpenDelete: boolean = false;
   adminForm!: FormGroup;
   file?: File;
-  categories: ICategory[] = []
-  categoriesAll: ICategory[] = []
 
   changeVisibility() {
     this.isOpen = !this.isOpen;
@@ -53,33 +54,66 @@ export class AdminPanelProductComponent implements OnInit {
 
   submitCreate() {
     if (!this.adminForm.invalid) {
-      const cat = this.categories.find(cat => cat.name === this.adminForm.controls['categoryId'].value)
-      console.log(cat)
-      if (cat?.subcategories) {
-        this.productService.create(this.adminForm.value, this.file, cat.id?.toString()).subscribe(item => {
+      this.modalResponseService.isOpenAfterSubmit = true
+      this.modalResponseService.isLoad = true
+      const cat = this.categoriesService.categories.find(c => c.name.toLowerCase() == this.adminForm.controls['category'].value.toLowerCase());
+      const catSub = this.categoriesService.categoriesSub.find(c => c.name.toLowerCase() == this.adminForm.controls['category'].value.toLowerCase());
+
+      if (cat) {
+        this.productService.create(this.adminForm.value, this.file, cat.id?.toString(), catSub?.id?.toString()).subscribe(item => {
           this.productService.products.push(item)
+          this.modalResponseService.setStatus(200);
           this.changeVisibility();
           this.adminForm.reset();
-        });
-      } else {
-        this.productService.create(this.adminForm.value, this.file, cat?.categoryId?.toString(), cat?.id?.toString(),).subscribe(item => {
-          console.log(item)
+        }, (error) => {
+          this.modalResponseService.setStatus(error.status);
+        })
+      } else if (catSub) {
+        this.productService.create(this.adminForm.value, this.file, catSub.categoryId.toString(), catSub.id?.toString()).subscribe(item => {
           this.productService.products.push(item)
+          this.modalResponseService.setStatus(200);
           this.changeVisibility();
           this.adminForm.reset();
-        });
+        }, (error) => {
+          this.modalResponseService.setStatus(error.status);
+        })
       }
-
-
     }
   }
   submitEdit() {
-    this.product.title = this.adminForm.controls['title'].value;
-    /*   this.product.time = this.adminForm.controls['time'].value;
-      this.product.text = this.adminForm.controls['text'].value; */
-    this.product.imagePath = this.adminForm.controls['imagePath'].value;
-    this.productService.edit(this.product).subscribe();
-    this.changeVisibility();
+    if (!this.adminForm.invalid || this.adminForm.get('image')?.['errors']?.['required']) {
+      const cat = this.categoriesService.categories.find(c => c.name.toLowerCase() == this.adminForm.controls['category'].value.toLowerCase());
+      const catSub = this.categoriesService.categoriesSub.find(c => c.name.toLowerCase() == this.adminForm.controls['category'].value.toLowerCase());
+
+      this.modalResponseService.isOpenAfterSubmit = true
+      this.modalResponseService.isLoad = true
+
+      this.product.title = this.adminForm.controls['title'].value;
+      this.product.description = this.adminForm.controls['description'].value;
+      this.product.packaging = this.adminForm.controls['packaging'].value;
+      this.product.specials = this.adminForm.controls['specials'].value;
+      this.product.title = this.adminForm.controls['title'].value;
+
+      if (cat) {
+        this.productService.edit(this.product, this.file, cat.id?.toString(), catSub?.id?.toString()).subscribe(item => {
+          this.productService.products.push(item)
+          this.changeVisibility();
+          this.adminForm.reset();
+          this.modalResponseService.setStatus(200);
+        }, (error) => {
+          this.modalResponseService.setStatus(error.status);
+        })
+      } else if (catSub) {
+        this.productService.edit(this.product, this.file, catSub.categoryId.toString(), catSub.id?.toString()).subscribe(item => {
+          this.productService.products.push(item)
+          this.modalResponseService.setStatus(200);
+          this.changeVisibility();
+          this.adminForm.reset();
+        }, (error) => {
+          this.modalResponseService.setStatus(error.status);
+        })
+      }
+    }
   }
 
   delete() {
@@ -96,20 +130,12 @@ export class AdminPanelProductComponent implements OnInit {
       description: new FormControl("", [Validators.required, Validators.minLength(2)]),
       packaging: new FormControl("", [Validators.minLength(2)]),
       specials: new FormControl("", [Validators.minLength(2)]),
-      categoryId: new FormControl("", [Validators.required]),
+      category: new FormControl("", [Validators.required]),
       image: new FormControl("", [Validators.required]),
       imageEdit: new FormControl("", []),
     })
 
-    this.categoriesService.getCategory().subscribe(items => {
-      this.categories = items
-      this.categoriesAll = items;
-      items.forEach(item => {
-        item.subcategories?.forEach(subCat => {
-          this.categoriesAll.push(subCat)
-        })
-      })
-    })
+    this.categoriesService.getCategory().subscribe()
 
     if (this.typePanel == this.allTypesPanel.ItemEdit) {
       this.adminForm.controls["title"].setValue(this.product.title)
@@ -117,7 +143,7 @@ export class AdminPanelProductComponent implements OnInit {
       this.adminForm.controls["packaging"].setValue(this.product.packaging)
       this.adminForm.controls["specials"].setValue(this.product.specials)
       const categoryProduct = this.product.subcategory ? this.product.subcategory.name : this.product.category.name
-      this.adminForm.controls["categoryId"].setValue(categoryProduct)
+      this.adminForm.controls["category"].setValue(categoryProduct)
     }
   }
 }

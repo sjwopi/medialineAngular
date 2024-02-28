@@ -1,0 +1,33 @@
+
+<form class="adminPanel__form create" [formGroup]="adminFormCreate">
+  <h1 class="adminPanel__title">Создание</h1>
+
+  <div class="adminPanel__contentrow">
+    <div class="adminPanel__content">
+      <p>Добавить категорию</p>
+      <input placeholder="Название" class="adminPanel__input" formControlName="category">
+      <div class="adminPanel__err" *ngIf="adminFormCreate.get('category')?.invalid">
+        <span *ngIf="adminFormCreate.get('category')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+      </div>
+      <div class="adminPanel__err" *ngIf="messageErrorNameTaken">
+        <span>{{messageErrorNameTaken}}</span>
+      </div>
+    </div>
+
+
+    <div class="adminPanel__content">
+      <p>Категория "Родитель" <u><i>(необязательно)</i></u></p>
+      <select class="adminPanel__input adminPanel__input_select" (change)="changeParent()" formControlName="parentcategory">
+        <option *ngFor="let cat of this.categoriesService.categories" [ngValue]="cat.name">
+          {{ cat.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="adminPanel__btns">
+    <button class="adminPanel__btn" (click)="addCategory()">Создать</button>
+  </div>
+</form>
+
+<app-modal-response></app-modal-response>

@@ -51,7 +51,6 @@ export class NewsService {
         item[key]
       );
     })
-    console.log(file)
     if (file) {
       formData.append(
         "image",

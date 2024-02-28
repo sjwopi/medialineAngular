@@ -19,7 +19,7 @@
       background-color: #aaa;
     }
   }
-  
+
   &__modal-overlay {
     position: fixed;
     top: 0;
@@ -37,7 +37,7 @@
     z-index: 2;
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 5vw -5px rgba(0, 0, 0, 0.4);
     background-color: white;
     padding: 30px;
     display: flex;

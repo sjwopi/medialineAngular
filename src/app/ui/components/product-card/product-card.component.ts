@@ -12,7 +12,8 @@ export class ProductCardComponent {
     description: "",
     imagePath: "",
     category: {
-      name: ""
+      name: "",
+      subcategories: []
     }
   }
 }

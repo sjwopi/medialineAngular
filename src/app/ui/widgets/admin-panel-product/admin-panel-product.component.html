@@ -14,15 +14,6 @@
         </div>
       </div>
 
-      <!-- <div>
-        <p>Дата</p>
-        <input placeholder="Дата" class="adminPanel__input" formControlName="time">
-        <div class="adminPanel__err" *ngIf="adminForm.get('time')?.invalid">
-          <span *ngIf="adminForm.get('time')?.['errors']?.['required']">Это поле не может быть пустым.</span>
-          <span *ngIf="adminForm.get('time')?.['errors']?.['pattern']">Введите дату в формате 2024-12-12</span>
-        </div>
-      </div> -->
-
       <div>
         <p>Содержание</p>
         <textarea placeholder="Содержание" class="adminPanel__input adminPanel__input_textarea"
@@ -53,17 +44,17 @@
 
       <div>
         <p>Категория</p>
-        <select class="adminPanel__input adminPanel__input_select" formControlName="categoryId">
-          <option *ngFor="let cat of categoriesAll" [ngValue]="cat.name">
+        <select class="adminPanel__input adminPanel__input_select" formControlName="category">
+          <option *ngFor="let cat of categoriesService.categoriesAll" [ngValue]="cat.name">
             {{ cat.name }}
           </option>
         </select>
-        <div class="adminPanel__err" *ngIf="adminForm.get('categoryId')?.invalid">
-          <span *ngIf="adminForm.get('categoryId')?.['errors']?.['required']">Это поле не может быть пустым.</span>
+        <div class="adminPanel__err" *ngIf="adminForm.get('category')?.invalid">
+          <span *ngIf="adminForm.get('category')?.['errors']?.['required']">Это поле не может быть пустым.</span>
         </div>
       </div>
 
-      <div *ngIf="this.typePanel == allTypesPanel.ItemCreate">
+      <div *ngIf="typePanel == allTypesPanel.ItemCreate">
         <p>Изображение</p>
         <input type="file" class="adminPanel__input" formControlName="image" (change)="changeFile($event)" />
         <div class="adminPanel__err" *ngIf="adminForm.get('image')?.invalid">
@@ -71,21 +62,21 @@
         </div>
       </div>
 
-      <div *ngIf="this.typePanel == allTypesPanel.ItemEdit">
+      <div *ngIf="typePanel == allTypesPanel.ItemEdit">
         <p>Изменить изображение <u><i>(необязательно)</i></u></p>
         <input type="file" class="adminPanel__input" formControlName="imageEdit" (change)="changeFile($event)" />
       </div>
 
       <div class="adminPanel__btns">
-        <button (click)="changeVisibility()" class="adminPanel__btn adminPanel__btn_back">Отмена</button>
+        <button type="button" (click)="changeVisibility()" class="adminPanel__btn adminPanel__btn_back">Отмена</button>
 
-        <button *ngIf="this.typePanel == allTypesPanel.ItemCreate" class="adminPanel__btn"
-          (click)="this.submitCreate()">Создать</button>
-        <button *ngIf="this.typePanel == allTypesPanel.ItemEdit" class="adminPanel__btn"
-          (click)="this.submitEdit()">Редактировать</button>
+        <button type="button" *ngIf="typePanel == allTypesPanel.ItemCreate" class="adminPanel__btn"
+          (click)="submitCreate()">Создать</button>
+        <button type="button" *ngIf="typePanel == allTypesPanel.ItemEdit" class="adminPanel__btn"
+          (click)="submitEdit()">Редактировать</button>
 
-        <button *ngIf="this.typePanel == allTypesPanel.ItemEdit" class="adminPanel__btn adminPanel__btn_delete"
-          (click)="this.changeVisibilityDelete()">Удалить</button>
+        <button type="button" *ngIf="typePanel == allTypesPanel.ItemEdit" class="adminPanel__btn adminPanel__btn_delete"
+          (click)="changeVisibilityDelete()">Удалить</button>
       </div>
     </form>
   </div>
@@ -98,12 +89,14 @@
 
 
 <!-- модалка удаления -->
-<div *ngIf="this.isOpenDelete" class="adminPanel__modal-overlay" (click)="this.changeVisibilityDelete()"></div>
-<div *ngIf="this.isOpenDelete" class="adminPanel__modal-container">
+<div *ngIf="isOpenDelete" class="adminPanel__modal-overlay" (click)="changeVisibilityDelete()"></div>
+<div *ngIf="isOpenDelete" class="adminPanel__modal-container">
   <h2 class="adminPanel__title">Вы действительно хотите удалить?</h2>
 
   <div class="adminPanel__btns">
     <button (click)="changeVisibilityDelete()" class="adminPanel__btn adminPanel__btn_back">Отмена</button>
-    <button class="adminPanel__btn adminPanel__btn_delete" (click)="this.delete()">Удалить</button>
+    <button class="adminPanel__btn adminPanel__btn_delete" (click)="delete()">Удалить</button>
   </div>
 </div>
+
+<app-modal-response [isBack]="true"></app-modal-response>

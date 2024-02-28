@@ -16,14 +16,26 @@ export class CategoriesService {
 
   baseUrl: string = BASE_URL;
   jwt: string = this.authService.getToken() ?? '';
-  categories: ICategory[] = []
+  categories: ICategory[] = [];
+  categoriesSub: ISubCategory[] = [];
+  categoriesAll: (ICategory | ISubCategory)[] = [];
 
   getCategory(): Observable<ICategory[]> {
     return this.http.get<any>(`${this.baseUrl}/category`).pipe(
       delay(304),
       retry(2),
-      tap(categories => this.categories = categories)
-    )
+      tap(items => {
+        this.categories = items
+        this.categoriesAll = new Array(...items)
+
+        this.categories.forEach(item => {
+          item.subcategories?.forEach(subCat => {
+            this.categoriesSub.push(subCat)
+            this.categoriesAll.push(subCat)
+          })
+        })
+      }
+      ))
   }
 
   createCategory(item: ICategory): Observable<ICategory> {
@@ -31,7 +43,7 @@ export class CategoriesService {
       'Authorization': this.jwt
     })
     let formData = new FormData();
-    Object.keys(item).forEach((key: string)=> {
+    Object.keys(item).forEach((key: string) => {
       formData.append(
         key,
         /* @ts-ignore */
@@ -49,7 +61,7 @@ export class CategoriesService {
       'Authorization': this.jwt
     })
     let formData = new FormData();
-    Object.keys(item).forEach((key: string)=> {
+    Object.keys(item).forEach((key: string) => {
       formData.append(
         key,
         /* @ts-ignore */
@@ -62,39 +74,61 @@ export class CategoriesService {
     )
   }
 
-  createSubCategory(item: any): Observable<any> {
+  createSubCategory(item: ISubCategory): Observable<ISubCategory> {
     const headers: HttpHeaders = new HttpHeaders({
       'Authorization': this.jwt
     })
     let formData = new FormData();
-    Object.keys(item).forEach((key: string)=> {
+    Object.keys(item).forEach((key: string) => {
       formData.append(
         key,
         /* @ts-ignore */
         item[key]
       );
     })
-    return this.http.post<any>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
+    return this.http.post<ISubCategory>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
       delay(304),
       retry(2)
     )
   }
 
-  editSubCategory(item: any): Observable<any> {
+  editSubCategory(item: ISubCategory): Observable<ISubCategory> {
     const headers: HttpHeaders = new HttpHeaders({
       'Authorization': this.jwt
     })
     let formData = new FormData();
-    Object.keys(item).forEach((key: string)=> {
+    Object.keys(item).forEach((key: string) => {
       formData.append(
         key,
         /* @ts-ignore */
         item[key]
       );
     })
-    return this.http.patch<any>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
+    return this.http.patch<ISubCategory>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
       delay(304),
       retry(2)
+    )
+  }
+
+  deleteCat(id: number) {
+    const headers = new HttpHeaders({
+      'Authorization': this.jwt
+    })
+    return this.http.delete<ICategory>(`${this.baseUrl}/admin/category?id=${id}`, { headers }).pipe(
+      delay(200),
+      retry(2),
+      tap()
+    )
+  }
+
+  deleteSubCat(id: number) {
+    const headers = new HttpHeaders({
+      'Authorization': this.jwt
+    })
+    return this.http.delete<ISubCategory>(`${this.baseUrl}/admin/subcategory?id=${id}`, { headers }).pipe(
+      delay(200),
+      retry(2),
+      tap()
     )
   }
 }

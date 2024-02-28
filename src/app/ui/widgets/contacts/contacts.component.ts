@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { FeedbackService } from 'src/app/services/feedback.service';
+import { ModalResponseService } from 'src/app/services/modal-response.service';
 
 @Component({
   selector: 'app-contacts',
@@ -15,6 +16,7 @@ export class ContactsComponent {
   constructor(
     public feedbackService: FeedbackService,
     private recaptchaV3Service: ReCaptchaV3Service,
+    public modalResponseService: ModalResponseService
   ) { }
 
 
@@ -27,8 +29,13 @@ export class ContactsComponent {
 
   submitFormQuestions() {
     if (!this.questionsForm.invalid) {
+      this.modalResponseService.isOpenAfterSubmit = true
+      this.modalResponseService.isLoad = true
       this.feedbackService.createFeedback(this.questionsForm.value).subscribe(() => {
+        this.modalResponseService.setStatus(200);
         this.questionsForm.reset();
+      }, (error) => {
+        this.modalResponseService.setStatus(error.status);
       })
     }
   }

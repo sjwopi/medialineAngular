@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ModalResponseService } from 'src/app/services/modal-response.service';
 
 @Component({
   selector: 'app-modal-response',
@@ -6,14 +7,14 @@ import { Component, Input } from '@angular/core';
   styleUrl: './modal-response.component.scss'
 })
 export class ModalResponseComponent {
-  @Input() isOpenAfterSubmit: boolean = true;
-  @Input() isLoad: boolean = false;
-  @Input() isComplete: boolean = false;
-  @Input() messageAfterSubmit: string = "";
-  @Input() messageBtnAfterSubmit: string = "";
-  
+  constructor(
+    public resService: ModalResponseService
+  ) { }
+  @Input() isBack: boolean = false;
+
   changeVisibilityAfterSubmit() {
     document.body.classList.toggle('open')
-    this.isOpenAfterSubmit = !this.isOpenAfterSubmit;
+    this.resService.isOpenAfterSubmit = !this.resService.isOpenAfterSubmit
+    window.location.reload()
   }
 }

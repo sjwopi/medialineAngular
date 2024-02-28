@@ -22,7 +22,8 @@ export class ProductService {
       description: "",
       imagePath: "",
       category: {
-        name: ""
+        name: "",
+        subcategories: []
       }
     }
   ]
@@ -40,23 +41,11 @@ export class ProductService {
     )
   }
 
-  edit(item: IProduct) {
-    const headers: HttpHeaders = new HttpHeaders({
-      'Authorization': this.jwt
-    })
-    return this.http.patch<IProduct[]>(`${this.baseUrl}/admin/products`, item, { headers }).pipe(
-      delay(200),
-      retry(2),
-      tap()
-    )
-  }
-
-  create(item: any, file: any, categoryId: string | undefined, subcategoryId?: string | undefined) {
+  edit(item: IProduct, file: any, categoryId: string | undefined, subcategoryId?: string | undefined) {
     const headers = new HttpHeaders({
       'Authorization': this.jwt,
 
     })
-    console.log(subcategoryId)
 
     let formData = new FormData();
     Object.keys(item).forEach((key: string) => {
@@ -67,6 +56,51 @@ export class ProductService {
         item[key]
       );
     })
+
+    if (file) {
+      formData.append(
+        "image",
+        file
+      );
+    }
+    if (categoryId) {
+      formData.append(
+        "categoryId",
+        categoryId
+      );
+    }
+    if (subcategoryId) {
+      formData.append(
+        "subcategoryId",
+        subcategoryId
+      );
+    }
+
+    formData.forEach(item => console.log(item))
+
+    return this.http.patch<IProduct>(`${this.baseUrl}/admin/products`, formData, { headers }).pipe(
+      delay(200),
+      retry(2),
+      tap()
+    )
+  }
+
+  create(item: IProduct, file: any, categoryId: string | undefined, subcategoryId?: string | undefined) {
+    const headers = new HttpHeaders({
+      'Authorization': this.jwt,
+
+    })
+
+    let formData = new FormData();
+    Object.keys(item).forEach((key: string) => {
+      if(key !== 'categoryId' && key !== 'subcategoryId')
+      formData.append(
+        key,
+        /* @ts-ignore */
+        item[key]
+      );
+    })
+
     formData.append(
       "image",
       file
@@ -78,6 +112,7 @@ export class ProductService {
       );
     }
     if (subcategoryId) {
+      console.log(subcategoryId)
       formData.append(
         "subcategoryId",
         subcategoryId

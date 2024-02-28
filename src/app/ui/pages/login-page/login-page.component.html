@@ -25,25 +25,4 @@
   </form>
 </section>
 
-
-<div *ngIf="isOpenAfterSubmit" class="modalRes__modal-overlay"  (click)="changeVisibilityAfterSubmit()">
-  <app-loading *ngIf="isOpenAfterSubmit && isLoad" ngClass="white"></app-loading>
-</div>
-
-<div *ngIf="isOpenAfterSubmit && !isLoad" class="modalRes__modal-container">
-  <h2 class="modalRes__title">{{messageAfterSubmit}}</h2>
-
-  <div class="modalRes__checkmark" [ngClass]="{'complete': this.isComplete}"></div>
-
-  <div class="modalRes__btns">
-    <button class="modalRes__btn" (click)="changeVisibilityAfterSubmit()">{{messageBtnAfterSubmit}}</button>
-  </div>
-</div>
-
-<!-- <app-modal-response 
-  [isOpenAfterSubmit]="isOpenAfterSubmit"
-  [isLoad]="isLoad"
-  [isComplete]="isComplete"
-  messageAfterSubmit="{{messageAfterLogin}}"
-  messageBtnAfterSubmit="{{messageBtnAfterLogin}}"
-  ></app-modal-response> -->
+<app-modal-response [isBack]="true"></app-modal-response>

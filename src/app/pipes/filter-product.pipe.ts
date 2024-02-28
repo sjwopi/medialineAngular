@@ -12,7 +12,9 @@ export class FilterProductPipe implements PipeTransform {
         return products.slice(0, 12);
       }
       return products.filter(p => {
-        return (p.category.id == type.id?.toString() && p.category.name == type.name && !p.subcategory) || (p.subcategory?.id == type.id?.toString() && p.subcategory?.name == type.name && p.subcategory)
+        console.log(p.subcategory)
+        return (p.category.id == type.id?.toString() && p.category.name == type.name) || 
+                (p.subcategory?.id == type.id?.toString() && p.subcategory?.name == type.name && p.subcategory)
       });
     }
     return [];

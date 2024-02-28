@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalResponseService } from 'src/app/services/modal-response.service';
 
 @Component({
   selector: 'app-login-page',
@@ -11,49 +12,22 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginPageComponent implements OnInit {
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
+    public modalResponseService: ModalResponseService
   ) { }
-
   loginForm!: FormGroup;
-  messageErr: string = "";
-  isLoad: boolean = false;
-  isOpenAfterSubmit: boolean = false;
-  isComplete: boolean = false;
-  messageAfterSubmit?: string;
-  messageBtnAfterSubmit?: string;
-
-  changeVisibilityAfterSubmit() {
-    if(!this.isLoad) {
-      document.body.classList.toggle('open')
-      this.isOpenAfterSubmit = !this.isOpenAfterSubmit;
-    }
-  }
 
   submitLogin() {
     if (!this.loginForm.invalid) {
-      this.changeVisibilityAfterSubmit();
-      this.isLoad = true;
+      this.modalResponseService.isOpenAfterSubmit = true
+      this.modalResponseService.isLoad = true
 
       this.authService.login(this.loginForm.value).subscribe(item => {
-        this.isComplete = true
-        this.messageAfterSubmit = 'Успешно!';
-        this.messageBtnAfterSubmit = 'Продолжить';
-        this.isLoad = false;
+        this.modalResponseService.setStatus(200);
       }, (error) => {
-        this.isComplete = false
-        this.messageBtnAfterSubmit = 'Попробовать еще раз';
-        switch (error.status) {
-          case 403:
-            this.messageAfterSubmit = 'Неверный логин или пароль!';
-            break;
-          case 500:
-            this.messageAfterSubmit = 'Ошибка сервера!';
-            break;
-          default:
-            this.messageAfterSubmit = 'Что-то пошло не так!';
-        }
-        this.isLoad = false;
+        this.modalResponseService.setStatus(error.status);
       });
+      this.loginForm.reset()
     }
   }
   ngOnInit(): void {

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { INewsItem } from 'src/app/models/news.model';
 import { FileUploader } from 'ng2-file-upload';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalResponseService } from 'src/app/services/modal-response.service';
 
 @Component({
   selector: 'app-admin-panel-news',
@@ -26,7 +27,8 @@ export class AdminPanelNewsComponent implements OnInit {
   constructor(
     private router: Router,
     public newsService: NewsService,
-    public authService: AuthService
+    public authService: AuthService,
+    public modalResponseService: ModalResponseService
   ) { }
 
   allTypesPanel = IPanelTypes;
@@ -36,12 +38,6 @@ export class AdminPanelNewsComponent implements OnInit {
   adminForm!: FormGroup;
   file?: File;
   messageErrorDate?: string;
-
-  isLoad: boolean = false;
-  isOpenAfterSubmit: boolean = false;
-  isComplete: boolean = false;
-  messageAfterSubmit?: string;
-  messageBtnAfterSubmit?: string;
 
   changeVisibility() {
     this.isOpen = !this.isOpen;
@@ -69,47 +65,32 @@ export class AdminPanelNewsComponent implements OnInit {
     this.file = e.target.files[0];
   }
 
-  changeVisibilityAfterSubmit() {
+/*   changeVisibilityAfterSubmit() {
     if (!this.isLoad) {
       document.body.classList.toggle('open')
       this.isOpenAfterSubmit = !this.isOpenAfterSubmit;
     }
-  }
+  } */
 
   submitCreate() {
     if (!this.adminForm.invalid) {
-      this.changeVisibilityAfterSubmit();
-      this.isLoad = true;
+      this.modalResponseService.isOpenAfterSubmit = true
+      this.modalResponseService.isLoad = true
 
       this.newsService.create(this.adminForm.value, this.file!).subscribe(item => {
         this.newsService.news.unshift(item)
         this.changeVisibility();
         this.adminForm.reset();
-        this.isComplete = true
-        this.messageAfterSubmit = 'Успешно!';
-        this.messageBtnAfterSubmit = 'Продолжить';
-        this.isLoad = false;
+        this.modalResponseService.setStatus(200);
       }, (error) => {
-        this.isComplete = false
-        this.messageBtnAfterSubmit = 'Попробовать еще раз';
-        switch (error.status) {
-          case 403:
-            this.messageAfterSubmit = 'У вас нет доступа!';
-            break;
-          case 500:
-            this.messageAfterSubmit = 'Ошибка сервера!';
-            break;
-          default:
-            this.messageAfterSubmit = 'Что-то пошло не так!';
-        }
-        this.isLoad = false;
+        this.modalResponseService.setStatus(error.status);
       });
     }
   }
   submitEdit() {
-    if (this.adminForm.invalid) {
-      this.changeVisibilityAfterSubmit();
-      this.isLoad = true;
+    if (!this.adminForm.invalid || this.adminForm.get('image')?.['errors']?.['required']) {
+      this.modalResponseService.isOpenAfterSubmit = true
+      this.modalResponseService.isLoad = true
 
       this.news.title = this.adminForm.controls['title'].value;
       this.news.time = this.adminForm.controls['time'].value;
@@ -118,31 +99,22 @@ export class AdminPanelNewsComponent implements OnInit {
         this.news = item;
         this.changeVisibility();
         this.adminForm.reset();
-        this.isComplete = true
-        this.messageAfterSubmit = 'Успешно!';
-        this.messageBtnAfterSubmit = 'Продолжить';
-        this.isLoad = false;
+        this.modalResponseService.setStatus(200);
       }, (error) => {
-        this.isComplete = false
-        this.messageBtnAfterSubmit = 'Попробовать еще раз';
-        switch (error.status) {
-          case 403:
-            this.messageAfterSubmit = 'У вас нет доступа!';
-            break;
-          case 500:
-            this.messageAfterSubmit = 'Ошибка сервера!';
-            break;
-          default:
-            this.messageAfterSubmit = 'Что-то пошло не так!';
-        }
-        this.isLoad = false;
+        this.modalResponseService.setStatus(error.status);
       });
     }
   }
 
   delete() {
-    this.newsService.delete(this.news.id!).subscribe()
-    this.router.navigate(['/news'])
+    this.changeVisibilityDelete()
+    this.modalResponseService.isOpenAfterSubmit = true
+    this.modalResponseService.isLoad = true
+    this.newsService.delete(this.news.id!).subscribe(() => {
+      this.modalResponseService.setStatus(200);
+    }, (error) => {
+      this.modalResponseService.setStatus(error.status);
+    })
   }
 
   ngOnInit(): void {

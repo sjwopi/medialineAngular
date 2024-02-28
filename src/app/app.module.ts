@@ -34,6 +34,8 @@ import { FeedbackService } from './services/feedback.service';
 import { LoadingComponent } from './ui/components/loading/loading.component';
 import { AdminPanelCategoriesComponent } from './ui/widgets/admin-panel-categories/admin-panel-categories.component';
 import { ModalResponseComponent } from './ui/components/modal-response/modal-response.component';
+import { AdminPanelCategoriesCreateComponent } from './ui/widgets/admin-panel-categories/admin-panel-categories-create/admin-panel-categories-create.component';
+import { AdminPanelCategoriesEditComponent } from './ui/widgets/admin-panel-categories/admin-panel-categories-edit/admin-panel-categories-edit.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { ModalResponseComponent } from './ui/components/modal-response/modal-res
     AdminPanelProductComponent,
     LoadingComponent,
     AdminPanelCategoriesComponent,
-    ModalResponseComponent
+    ModalResponseComponent,
+    AdminPanelCategoriesCreateComponent,
+    AdminPanelCategoriesEditComponent
   ],
   imports: [
     BrowserModule,

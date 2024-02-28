@@ -44,6 +44,7 @@ export class CatalogPageComponent {
 
       this.productService.getAll().pipe().subscribe(items => {
         this.products = items.reverse();
+        console.log(this.products[1])
         this.isLoad = false;
         this.sidebarHTML?.querySelector('.catalogPage__sidebar-item')?.classList.add('active')
       })

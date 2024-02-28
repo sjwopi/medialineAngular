@@ -13,9 +13,8 @@
         <u>обработку своих персональныхданных.</u>
       </a>
 
-      <button (click)="executeImportantAction()">Important action</button>
-      <!-- <button type="submit" class="contacts__btn" (click)="submitFormQuestions()">отправить</button>
- -->
+      <button type="submit" class="contacts__btn" (click)="executeImportantAction()">отправить</button>
+
     </form>
 
     <div class="contacts__text-list">
@@ -34,3 +33,5 @@
     </div>
   </div>
 </section>
+
+<app-modal-response [isBack]="true"></app-modal-response>

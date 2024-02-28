@@ -1,15 +1,16 @@
 <!-- Под вопросом! НЕ ЮЗАТЬ! -->
 
-<!-- <div *ngIf="isOpenAfterSubmit" class="login__modal-overlay" (click)="changeVisibilityAfterSubmit()">
-  <app-loading *ngIf="isOpenAfterSubmit && isLoad" ngClass="white"></app-loading>
+<div *ngIf="resService.isOpenAfterSubmit && isBack" class="modalRes__modal-overlay" (click)="changeVisibilityAfterSubmit()">
+  <app-loading *ngIf="resService.isOpenAfterSubmit && resService.isLoad" ngClass="white"></app-loading>
 </div>
 
-<div *ngIf="isOpenAfterSubmit && !isLoad" [(ngModel)]="isOpenAfterSubmit || isLoad" class="modalRes__modal-container">
-  <h2 class="modalRes__title">{{messageAfterSubmit}}</h2>
 
-  <div class="modalRes__checkmark" [ngClass]="{'complete': this.isComplete}"></div>
+<div *ngIf="resService.isOpenAfterSubmit && !resService.isLoad" class="modalRes__modal-container">
+  <h2 class="modalRes__title">{{resService.resText}}</h2>
+
+  <div class="modalRes__checkmark" [ngClass]="{'complete': resService.isComplete}"></div>
 
   <div class="modalRes__btns">
-    <button class="modalRes__btn" (click)="changeVisibilityAfterSubmit()">{{messageBtnAfterSubmit}}</button>
+    <button class="modalRes__btn" (click)="changeVisibilityAfterSubmit()">{{resService.resBtn}}</button>
   </div>
-</div> -->
+</div>

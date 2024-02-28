@@ -16,7 +16,8 @@ export class CatalogItemPageComponent {
     description: "",
     imagePath: "",
     category: {
-      name: ""
+      name: "",
+      subcategories:[]
     }
   }
   allPanelTypes = IPanelTypes;
@@ -25,8 +26,6 @@ export class CatalogItemPageComponent {
   constructor(private activateRoute: ActivatedRoute, public productsService: ProductService) {
     this.id = activateRoute.snapshot.params["id"];
   }
-
-
 
   ngOnInit(): void {
     this.productsService.getById(this.id).pipe().subscribe(item => {
