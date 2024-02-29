@@ -21,7 +21,7 @@ export class CategoriesService {
   categoriesAll: (ICategory | ISubCategory)[] = [];
 
   getCategory(): Observable<ICategory[]> {
-    return this.http.get<ICategory[]>(`${this.baseUrl}/category`).pipe(
+    return this.http.get<ICategory[]>(`${this.baseUrl}/api/category`).pipe(
       delay(304),
       retry(2),
       tap(items => {
@@ -50,7 +50,7 @@ export class CategoriesService {
         item[key]
       );
     })
-    return this.http.post<ICategory>(`${this.baseUrl}/admin/category`, formData, { headers }).pipe(
+    return this.http.post<ICategory>(`${this.baseUrl}/api/admin/category`, formData, { headers }).pipe(
       delay(304),
       retry(2)
     )
@@ -68,7 +68,7 @@ export class CategoriesService {
         item[key]
       );
     })
-    return this.http.patch<ICategory>(`${this.baseUrl}/admin/category`, formData, { headers }).pipe(
+    return this.http.patch<ICategory>(`${this.baseUrl}/api/admin/category`, formData, { headers }).pipe(
       delay(304),
       retry(2)
     )
@@ -86,7 +86,7 @@ export class CategoriesService {
         item[key]
       );
     })
-    return this.http.post<ISubCategory>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
+    return this.http.post<ISubCategory>(`${this.baseUrl}/api/admin/subcategory`, formData, { headers }).pipe(
       delay(304),
       retry(2)
     )
@@ -104,7 +104,7 @@ export class CategoriesService {
         item[key]
       );
     })
-    return this.http.patch<ISubCategory>(`${this.baseUrl}/admin/subcategory`, formData, { headers }).pipe(
+    return this.http.patch<ISubCategory>(`${this.baseUrl}/api/admin/subcategory`, formData, { headers }).pipe(
       delay(304),
       retry(2)
     )
@@ -114,7 +114,7 @@ export class CategoriesService {
     const headers = new HttpHeaders({
       'Authorization': this.jwt
     })
-    return this.http.delete<ICategory>(`${this.baseUrl}/admin/category?id=${id}`, { headers }).pipe(
+    return this.http.delete<ICategory>(`${this.baseUrl}/api/admin/category?id=${id}`, { headers }).pipe(
       delay(200),
       retry(2),
       tap()
@@ -125,7 +125,7 @@ export class CategoriesService {
     const headers = new HttpHeaders({
       'Authorization': this.jwt
     })
-    return this.http.delete<ISubCategory>(`${this.baseUrl}/admin/subcategory?id=${id}`, { headers }).pipe(
+    return this.http.delete<ISubCategory>(`${this.baseUrl}/api/admin/subcategory?id=${id}`, { headers }).pipe(
       delay(200),
       retry(2),
       tap()

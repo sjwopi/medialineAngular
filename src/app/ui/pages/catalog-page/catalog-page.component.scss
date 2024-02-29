@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: row;
   gap: 40px;
-  
+
   .without {
     position: relative;
+
     &::before {
       content: "Нет категории";
       position: absolute;
@@ -14,7 +15,6 @@
       text-align: center;
       color: white;
       padding: 5% 0;
-      z-index: 2;
       width: 100%;
       font-size: 24px;
       font-weight: 900;
@@ -30,6 +30,38 @@
     border: #d8e0f1 1px solid;
     border-radius: 5px;
     overflow: hidden;
+  }
+
+  &__input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  &__input {
+    background-color: white;
+    width: calc(90% - 40px);
+    padding: 15px 40px;
+    border: #d8e0f1 1px solid;
+    border-radius: 5px 0 0 5px;
+    border-right: none;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    outline: none;
+
+    &:focus {
+      border: #3f71cd 1px solid;
+    }
+  }
+
+  &__input-btn {
+    width: 10%;
+    padding: 24px 40px;
+    border: #d8e0f1 1px solid;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    background: url('/assets/img/search.svg') center/30px no-repeat;
+    background-color: #3f71cd;
   }
 
   &__sidebar-container {

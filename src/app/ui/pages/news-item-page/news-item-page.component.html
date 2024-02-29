@@ -14,6 +14,7 @@
   <h2 class="newspage__title title">{{news.title}}</h2>
   <div class="newspage__container">
     <img class="newspage__img"  src="http://localhost:8080/image/{{news.imagePath}}" alt="фото с мероприятия">
+    <!-- <img class="newspage__img"  src="/image/{{news.imagePath}}" alt="фото с мероприятия"> -->
     <h3 class="newspage__subtitle title">{{news.time}}</h3>
     <p class="newspage__text text" *ngFor="let p of news.text.split('\n')">{{p}}</p>
   </div>

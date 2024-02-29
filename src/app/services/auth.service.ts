@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   login(userInfo: IUser): Observable<IUser> {
-    return this.http.post<IUser>(`${this.baseUrl}/admin/login`, userInfo).pipe(
+    return this.http.post<IUser>(`${this.baseUrl}/api/admin/login`, userInfo).pipe(
       delay(200),
       retry(2),
       tap((user) => {

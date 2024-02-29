@@ -3,25 +3,35 @@
 </section>
 
 <section class="content catalogPage">
-  <div class="catalogPage__sidebar">
 
-    <div class="catalogPage__sidebar-container" *ngFor="let cat of categor">
-      <button class="catalogPage__sidebar-item" *ngIf="!cat.subcategories"
-        (click)="changeSort($event, cat)">{{cat.name}}</button>
+  <div>
 
-      <button class="catalogPage__sidebar-item" *ngIf="cat.subcategories"
-        (click)="openSubCat($event, cat)">{{cat.name}}</button>
-      <button class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.subcategories"
-        (click)="changeSort($event, catSub)">{{catSub.name}}</button>
+    <div class="catalogPage__input-container">
+      <input placeholder="Что хотете найти?" class="catalogPage__input" [(ngModel)]="searchInputValue">
+      <button class="catalogPage__input-btn" (click)="changeSearchValue()"></button>
     </div>
 
-    <app-admin-panel-categories></app-admin-panel-categories>
+    <div class="catalogPage__sidebar">
+
+      <div class="catalogPage__sidebar-container" *ngFor="let cat of categor">
+        <a class="catalogPage__sidebar-item" *ngIf="!cat.subcategories"
+          (click)="changeSort($event, cat)">{{cat.name}}</a>
+
+        <a class="catalogPage__sidebar-item" *ngIf="cat.subcategories"
+          (click)="openSubCat($event, cat)">{{cat.name}}</a>
+        <a class="catalogPage__sidebar-item child" *ngFor="let catSub of cat.subcategories"
+          (click)="changeSort($event, catSub)">{{catSub.name}}</a>
+      </div>
+
+      <app-admin-panel-categories></app-admin-panel-categories>
+
+    </div>
   </div>
 
-  <div class="catalogPage__list">
+  <div class="catalogPage__list" id="catalog">
     <app-loading *ngIf="isLoad"></app-loading>
-    <app-product-card *ngFor="let product of this.products! | filterProduct:sortByType"
-      [product]="product" [ngClass]="{'without': isLogin && product.category.id == 1}"></app-product-card>
+    <app-product-card *ngFor="let product of this.products! | filterProduct:sortByType" [product]="product"
+      [ngClass]="{'without': isLogin && product.category.id == 1}"></app-product-card>
   </div>
 </section>
 

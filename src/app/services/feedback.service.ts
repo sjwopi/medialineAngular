@@ -22,7 +22,7 @@ export class FeedbackService {
       );
     })
 
-    return this.http.post<IFeedback>(`${this.baseUrl}/feedback`, formData).pipe(
+    return this.http.post<IFeedback>(`${this.baseUrl}/api/feedback`, formData).pipe(
       delay(200),
       retry(2),
       tap()

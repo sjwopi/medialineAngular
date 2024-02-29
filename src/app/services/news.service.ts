@@ -26,14 +26,14 @@ export class NewsService {
   ]
 
   getAll(): Observable<INewsItem[]> {
-    return this.http.get<INewsItem[]>(`${this.baseUrl}/news`).pipe(
+    return this.http.get<INewsItem[]>(`${this.baseUrl}/api/news`).pipe(
       delay(304),
       retry(2),
       tap(news => this.news = news)
     )
   }
   getById(id: number): Observable<INewsItem> {
-    return this.http.get<INewsItem>(`${this.baseUrl}/news/${id}`).pipe(
+    return this.http.get<INewsItem>(`${this.baseUrl}/api/news/${id}`).pipe(
       delay(304),
       retry(2)
     )
@@ -58,7 +58,7 @@ export class NewsService {
       );
     }
 
-    return this.http.patch<INewsItem>(`${this.baseUrl}/admin/news`, formData, { headers }).pipe(
+    return this.http.patch<INewsItem>(`${this.baseUrl}/api/admin/news`, formData, { headers }).pipe(
       delay(200),
       retry(2),
       tap()
@@ -83,7 +83,7 @@ export class NewsService {
       file
     );
 
-    return this.http.post<INewsItem>(`http://localhost:8080/api/admin/news`, formData, { headers }).pipe(
+    return this.http.post<INewsItem>(`${this.baseUrl}/api/admin/news`, formData, { headers }).pipe(
       delay(1304),
       retry(2),
       tap()
@@ -93,7 +93,7 @@ export class NewsService {
     const headers = new HttpHeaders({
       'Authorization': this.jwt
     })
-    return this.http.delete<INewsItem>(`${this.baseUrl}/admin/news?id=${id}`, { headers }).pipe(
+    return this.http.delete<INewsItem>(`${this.baseUrl}/api/admin/news?id=${id}`, { headers }).pipe(
       delay(200),
       retry(2),
       tap()

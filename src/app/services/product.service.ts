@@ -28,14 +28,14 @@ export class ProductService {
     }
   ]
   getAll(): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(`${this.baseUrl}/products`).pipe(
+    return this.http.get<IProduct[]>(`${this.baseUrl}/api/products`).pipe(
       delay(304),
       retry(2),
       tap(products => this.products = products)
     )
   }
   getById(id: number): Observable<IProduct> {
-    return this.http.get<IProduct>(`${this.baseUrl}/products/${id}`).pipe(
+    return this.http.get<IProduct>(`${this.baseUrl}/api/products/${id}`).pipe(
       delay(304),
       retry(2)
     )
@@ -78,7 +78,7 @@ export class ProductService {
 
     formData.forEach(item => console.log(item))
 
-    return this.http.patch<IProduct>(`${this.baseUrl}/admin/products`, formData, { headers }).pipe(
+    return this.http.patch<IProduct>(`${this.baseUrl}/api/admin/products`, formData, { headers }).pipe(
       delay(200),
       retry(2),
       tap()
@@ -119,7 +119,7 @@ export class ProductService {
       );
     }
 
-    return this.http.post<IProduct>(`${this.baseUrl}/admin/products`, formData, { headers }).pipe(
+    return this.http.post<IProduct>(`${this.baseUrl}/api/admin/products`, formData, { headers }).pipe(
       delay(200),
       retry(2),
       tap()
@@ -130,7 +130,7 @@ export class ProductService {
     const headers = new HttpHeaders({
       'Authorization': this.jwt
     })
-    return this.http.delete<IProduct>(`${this.baseUrl}/admin/products?id=${id}`, { headers }).pipe(
+    return this.http.delete<IProduct>(`${this.baseUrl}/api/admin/products?id=${id}`, { headers }).pipe(
       delay(200),
       retry(2),
       tap()

@@ -121,7 +121,7 @@ export class AdminPanelProductComponent implements OnInit {
     this.productService.products.filter((item) => {
       return item.id == this.product.id;
     })
-    this.router.navigate(['/news'])
+    this.router.navigate(['/product'])
   }
 
   ngOnInit(): void {

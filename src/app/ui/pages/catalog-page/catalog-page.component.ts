@@ -23,13 +23,23 @@ export class CatalogPageComponent {
   sortByType: ICategory | ISubCategory = this.categor[0];
   allTypesProduct: string[] = []
   sidebarHTML: Element | null | undefined;
+  catalogHTML: Element | null | undefined;
   allPanelTypes = IPanelTypes;
   isLoad: boolean = true;
+  searchInputValue: string = "";
 
   changeSort(e: any, category: ICategory | ISubCategory) {
     this.sidebarHTML!.querySelector('.active')?.classList.remove('active')
     e.target.classList.add('active')
     this.sortByType = category;
+    
+    if (document.documentElement.clientWidth <= 1000) {
+      window.scrollTo({
+        top: this.catalogHTML!.getBoundingClientRect().top,
+        left: 0,
+        behavior: "smooth",
+      })
+    }
   }
 
   openSubCat(e: any, category: ICategory | ISubCategory) {
@@ -37,9 +47,14 @@ export class CatalogPageComponent {
     e.target.parentElement.querySelectorAll('.child')?.forEach((item: any) => item.classList.toggle('show'))
   }
 
+  changeSearchValue() {
+
+  }
+
   ngOnInit(): void {
     this.isLoad = true;
     this.sidebarHTML = document.querySelector('.catalogPage__sidebar');
+    this.catalogHTML = document.querySelector('.catalogPage__list');
     
     this.categoriesService.getCategory().subscribe(items => {
       this.categor = items;

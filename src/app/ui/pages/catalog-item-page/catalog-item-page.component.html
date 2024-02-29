@@ -12,7 +12,8 @@
 
   <div class="catalogItem__container">
     <img *ngIf="product.imagePath" class="catalogItem__img" src="http://localhost:8080/image/{{product.imagePath}}" alt="{{product.title}}">
-    <img *ngIf="!product.imagePath" class="catalogItem__img" src="assets/img/zaglushka.png" alt="{{product.title}}">
+    <!-- <img *ngIf="product.imagePath" class="catalogItem__img" src="/image/{{product.imagePath}}" alt="{{product.title}}"> -->
+    <img *ngIf="!product.imagePath" class="catalogItem__img" src="/assets/img/zaglushka.png" alt="{{product.title}}">
 
     <h2 class="catalogItem__subtitle" *ngIf="product.specials">Особенности</h2>
     <ul class="catalogItem__list" *ngIf="product.specials">
